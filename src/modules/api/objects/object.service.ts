@@ -1,4 +1,4 @@
-import { ClusterEntity, ObjectEntity, ObjectImageEntity } from '@infra/postgres/entities';
+import { ObjectEntity, ObjectImageEntity } from '@infra/postgres/entities';
 import { Injectable, Logger } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import { DeepPartial, FindOneOptions, In, Not, Repository } from 'typeorm';
@@ -13,6 +13,7 @@ import { UpdateObjectInputDto } from './dtos/update-object.input.dto';
 
 @Injectable()
 export class ObjectService {
+    private readonly logger = new Logger(ObjectService.name);
     constructor(
         @InjectRepository(ObjectEntity)
         private readonly objectRepository: Repository<ObjectEntity>,

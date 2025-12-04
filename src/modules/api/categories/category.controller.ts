@@ -11,7 +11,7 @@ import {
     Post,
     Query,
 } from '@nestjs/common';
-import { ApiTags, ApiBearerAuth, ApiConsumes, ApiOperation, ApiResponse } from '@nestjs/swagger';
+import { ApiTags, ApiOperation, ApiResponse } from '@nestjs/swagger';
 import { InjectMapper } from '@automapper/nestjs';
 import { CategoryEntity, FileEntity } from '@infra/postgres/entities';
 import {

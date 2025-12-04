@@ -1,13 +1,11 @@
 import { CategoryEntity } from '@infra/postgres/entities';
 import { Injectable, Logger } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
-import { Category } from 'aws-sdk/clients/cloudformation';
 import { FindOneOptions, Repository, UpdateResult } from 'typeorm';
 import { CreateCategoryInputDto, UpdateCategoryInputDto } from './dtos';
 import { AlreadyExistsException, EntityNotFoundException } from '@shared/exceptions';
 import { FileService } from '@api/files/file.service';
 import { UniversalPaginationDto } from '@shared/dtos';
-import { toUSVString } from 'util';
 
 @Injectable()
 export class CategoryService {
