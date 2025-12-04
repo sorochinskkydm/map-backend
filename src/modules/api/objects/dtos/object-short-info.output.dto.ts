@@ -49,6 +49,20 @@ export class ObjectShortInfoOutputDto {
 
     @AutoMap()
     @ApiProperty({
+        title: 'Широта',
+        example: ExampleValueEnum.LATITUDE,
+    })
+    latitude: number;
+
+    @AutoMap()
+    @ApiProperty({
+        title: 'Долгота',
+        example: ExampleValueEnum.LONGITUDE,
+    })
+    longitude: number;
+
+    @AutoMap()
+    @ApiProperty({
         title: 'Порядок сортировки',
         example: 1,
     })

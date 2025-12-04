@@ -1,15 +1,16 @@
 import { ClusterEntity, ClusterImageEntity } from '@infra/postgres/entities';
-import { Injectable } from '@nestjs/common';
+import { Injectable, Logger } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import { EntityNotFoundException } from '@shared/exceptions';
 import { DeepPartial, FindOneOptions, ILike, In, Not, Repository } from 'typeorm';
 import { GetListClasterInputDto, UpdateClusterInputDto } from './dtos';
 import { UniversalPaginationDto } from '@shared/dtos';
 import { FileService } from '@api/files/file.service';
-import { PartitionValueList } from 'aws-sdk/clients/glue';
 
 @Injectable()
 export class ClusterService {
+    private readonly logger = new Logger(ClusterService.name);
+
     constructor(
         @InjectRepository(ClusterEntity)
         private readonly clusterRepository: Repository<ClusterEntity>,

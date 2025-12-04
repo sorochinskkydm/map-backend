@@ -1,5 +1,5 @@
 import { ClusterEntity, RequestEntity, RequestImageEntity } from '@infra/postgres/entities';
-import { Injectable } from '@nestjs/common';
+import { Injectable, Logger } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import { DeepPartial, FindOneOptions, In, Not, Repository } from 'typeorm';
 import {
@@ -20,6 +20,7 @@ import { ObjectService } from '@api/objects/object.service';
 
 @Injectable()
 export class RequestService {
+    private readonly logger = new Logger(RequestService.name);
     constructor(
         @InjectRepository(RequestEntity)
         private readonly requestRepository: Repository<RequestEntity>,

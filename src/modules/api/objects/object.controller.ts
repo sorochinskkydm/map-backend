@@ -2,6 +2,7 @@ import { Mapper } from '@automapper/core';
 import {
     Body,
     Controller,
+    Delete,
     Get,
     HttpStatus,
     Param,
@@ -21,6 +22,7 @@ import {
 import { ObjectEntity } from '@infra/postgres/entities';
 import { InjectMapper } from '@automapper/nestjs';
 import { UniversalPaginationDto } from '@shared/dtos';
+import { UpdateObjectInputDto } from './dtos/update-object.input.dto';
 
 @ApiTags('Объекты')
 @Controller({ path: 'objects', version: '1' })
@@ -51,6 +53,21 @@ export class ObjectController {
             data: await this.mapper.mapArrayAsync(objects, ObjectEntity, ListObjectOutputDto),
             total,
         };
+    }
+
+    @ApiOperation({ summary: 'Обновление объекта' })
+    @ApiResponse({ type: ObjectOutputDto, status: HttpStatus.OK })
+    @Post(':id')
+    async update(@Param('id', ParseUUIDPipe) id: string, @Body() dto: UpdateObjectInputDto) {
+        const object = await this.objectService.update(id, dto);
+        return this.mapper.mapAsync(object, ObjectEntity, ObjectOutputDto);
+    }
+
+    @ApiOperation({ summary: 'Удаление объекта' })
+    @ApiResponse({ type: Boolean, status: HttpStatus.OK })
+    @Delete(':id')
+    async delete(@Param('id', ParseUUIDPipe) id: string) {
+        return this.objectService.delete(id);
     }
 
     @ApiOperation({ summary: 'Получение детальной информации об объекте' })
