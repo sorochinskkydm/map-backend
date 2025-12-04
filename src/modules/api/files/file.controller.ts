@@ -17,8 +17,11 @@ import { InjectMapper } from '@automapper/nestjs';
 import { FileEntity } from '@infra/postgres/entities';
 import { FileInterceptor } from '@nestjs/platform-express';
 import { FileOutputDto, UploadFileInputDto } from './dtos';
+import { JwtAuthGuard } from '@shared/guards';
 
 @ApiTags('Файлы')
+@ApiBearerAuth('Authorization')
+@UseGuards(JwtAuthGuard)
 @Controller({ path: 'files', version: '1' })
 export class FileController {
     constructor(

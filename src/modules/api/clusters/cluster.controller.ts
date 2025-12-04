@@ -10,8 +10,9 @@ import {
     ParseUUIDPipe,
     Patch,
     Query,
+    UseGuards,
 } from '@nestjs/common';
-import { ApiOperation, ApiResponse, ApiTags } from '@nestjs/swagger';
+import { ApiBearerAuth, ApiOperation, ApiResponse, ApiTags } from '@nestjs/swagger';
 import { ClusterService } from './cluster.service';
 import { ClusterEntity } from '@infra/postgres/entities';
 import {
@@ -23,8 +24,11 @@ import {
 } from './dtos';
 import { CategoryOutputDto } from '@api/categories/dtos';
 import { UniversalPaginationDto } from '@shared/dtos';
+import { JwtAuthGuard } from '@shared/guards';
 
 @ApiTags('Кластеры')
+@ApiBearerAuth('Authorization')
+@UseGuards(JwtAuthGuard)
 @Controller({ path: 'clusters', version: '1' })
 export class ClusterController {
     constructor(

@@ -9,8 +9,9 @@ import {
     ParseUUIDPipe,
     Post,
     Query,
+    UseGuards,
 } from '@nestjs/common';
-import { ApiOperation, ApiResponse, ApiTags } from '@nestjs/swagger';
+import { ApiBearerAuth, ApiOperation, ApiResponse, ApiTags } from '@nestjs/swagger';
 import { ObjectService } from './object.service';
 import {
     CreateObjectInputDto,
@@ -23,7 +24,10 @@ import { ObjectEntity } from '@infra/postgres/entities';
 import { InjectMapper } from '@automapper/nestjs';
 import { UniversalPaginationDto } from '@shared/dtos';
 import { UpdateObjectInputDto } from './dtos/update-object.input.dto';
+import { JwtAuthGuard } from '@shared/guards';
 
+@ApiBearerAuth('Authorization')
+@UseGuards(JwtAuthGuard)
 @ApiTags('Объекты')
 @Controller({ path: 'objects', version: '1' })
 export class ObjectController {

@@ -55,14 +55,8 @@ export class AppConfigService {
     get jwtAccessSecretKey(): string {
         return this.configService.getOrThrow<string>('JWT_ACCESS_SECRET_KEY');
     }
-    get jwtRefreshSecretKey(): string {
-        return this.configService.getOrThrow<string>('JWT_REFRESH_SECRET_KEY');
-    }
-    get jwtAccessTtl(): string {
-        return this.configService.getOrThrow<string>('JWT_ACCESS_TTL');
-    }
-    get jwtRefreshTtl(): string {
-        return this.configService.getOrThrow<string>('JWT_REFRESH_TTL');
+    get jwtAccessTtl(): number {
+        return this.configService.getOrThrow<number>('JWT_ACCESS_TTL');
     }
 
     //AWS
@@ -77,5 +71,14 @@ export class AppConfigService {
     }
     get awsEndpoint(): string {
         return this.configService.get<string>('AWS_ENDPOINT', '');
+    }
+
+    //AUTH
+
+    get adminLogin(): string {
+        return this.configService.getOrThrow<string>('ADMIN_LOGIN');
+    }
+    get adminPassword(): string {
+        return this.configService.getOrThrow<string>('ADMIN_PASSWORD');
     }
 }

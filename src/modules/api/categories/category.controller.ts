@@ -10,8 +10,9 @@ import {
     Patch,
     Post,
     Query,
+    UseGuards,
 } from '@nestjs/common';
-import { ApiTags, ApiOperation, ApiResponse } from '@nestjs/swagger';
+import { ApiTags, ApiOperation, ApiResponse, ApiBearerAuth } from '@nestjs/swagger';
 import { InjectMapper } from '@automapper/nestjs';
 import { CategoryEntity, FileEntity } from '@infra/postgres/entities';
 import {
@@ -23,8 +24,11 @@ import {
 import { CategoryService } from './category.service';
 import { ListCategoryOutputDto } from './dtos/list-category.output.dto';
 import { UniversalPaginationDto } from '@shared/dtos';
+import { JwtAuthGuard } from '@shared/guards';
 
 @ApiTags('Категории')
+@ApiBearerAuth('Authorization')
+@UseGuards(JwtAuthGuard)
 @Controller({ path: 'categories', version: '1' })
 export class CategoryController {
     constructor(

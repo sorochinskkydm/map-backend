@@ -32,14 +32,16 @@ export class SwaggerInitializer {
     private initializeSwagger(app: INestApplication) {
         const config = new DocumentBuilder()
             .setTitle('nnmap.service')
-            .setDescription('Креативная инфрастуктура Нижнего Новгорода')
+            .setDescription('Креативная инфраструктура Нижнего Новгорода')
             .setVersion('1.0')
             .addBearerAuth(
                 {
-                    type: 'apiKey',
+                    type: 'http',
+                    scheme: 'bearer',
+                    bearerFormat: 'JWT',
                     name: 'Authorization',
+                    description: 'Enter JWT token',
                     in: 'header',
-                    description: 'Enter your token',
                 },
                 'Authorization',
             )

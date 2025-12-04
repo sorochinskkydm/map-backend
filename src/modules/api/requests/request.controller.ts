@@ -11,9 +11,10 @@ import {
     Patch,
     Post,
     Query,
+    UseGuards,
 } from '@nestjs/common';
 import { RequestService } from './request.service';
-import { ApiOperation, ApiResponse, ApiTags } from '@nestjs/swagger';
+import { ApiBearerAuth, ApiOperation, ApiResponse, ApiTags } from '@nestjs/swagger';
 import {
     CreateRequestInputDto,
     GetListRequestInputDto,
@@ -26,8 +27,11 @@ import {
 } from './dtos';
 import { RequestEntity } from '@infra/postgres/entities';
 import { UniversalPaginationDto } from '@shared/dtos';
+import { JwtAuthGuard } from '@shared/guards';
 
 @ApiTags('Заявки')
+@ApiBearerAuth('Authorization')
+@UseGuards(JwtAuthGuard)
 @Controller({ path: 'requests', version: '1' })
 export class RequestController {
     constructor(
