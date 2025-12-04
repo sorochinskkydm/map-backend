@@ -58,7 +58,15 @@ export class CategoryProfile extends AutomapperProfile {
                     mapWith(FileOutputDto, FileEntity, (source) => source.image),
                 ),
             );
-            createMap(mapper, CategoryEntity, CategoryShortInfoOutputDto);
+            createMap(
+                mapper,
+                CategoryEntity,
+                CategoryShortInfoOutputDto,
+                forMember(
+                    (d) => d.file,
+                    mapWith(FileOutputDto, FileEntity, (source) => source.image),
+                ),
+            );
         };
     }
 }

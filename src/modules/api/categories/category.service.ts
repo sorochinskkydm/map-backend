@@ -1,5 +1,5 @@
 import { CategoryEntity } from '@infra/postgres/entities';
-import { Injectable } from '@nestjs/common';
+import { Injectable, Logger } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import { Category } from 'aws-sdk/clients/cloudformation';
 import { FindOneOptions, Repository, UpdateResult } from 'typeorm';
@@ -7,16 +7,16 @@ import { CreateCategoryInputDto, UpdateCategoryInputDto } from './dtos';
 import { AlreadyExistsException, EntityNotFoundException } from '@shared/exceptions';
 import { FileService } from '@api/files/file.service';
 import { UniversalPaginationDto } from '@shared/dtos';
+import { toUSVString } from 'util';
 
 @Injectable()
 export class CategoryService {
+    private readonly logger = new Logger(CategoryService.name);
     constructor(
         @InjectRepository(CategoryEntity)
         private readonly categoryRepository: Repository<CategoryEntity>,
         private readonly fileService: FileService,
     ) {}
-
-    // Список Деталка (сама категория + связанный файл + количество объектов + список объектов) Удаление
 
     public async exists(options: FindOneOptions<CategoryEntity>): Promise<CategoryEntity> {
         const category = await this.categoryRepository.findOne(options);
@@ -31,16 +31,6 @@ export class CategoryService {
         return this.exists({
             where: { id },
             relations: { image: true, objects: { cluster: true } },
-            select: {
-                objects: {
-                    id: true,
-                    name: true,
-                    isVisible: true,
-                    address: true,
-                    sort: true,
-                    cluster: { id: true, name: true },
-                },
-            },
         });
     }
 
