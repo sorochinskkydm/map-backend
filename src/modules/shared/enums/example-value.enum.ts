@@ -18,4 +18,7 @@ export enum ExampleValueEnum {
     ORGANIZATION_NAME = 'Точка кипения Университета Добролюбова',
     AUTHOR = 'Дальнобойнов Алексей Денисович',
     DATE_TIME = '2025-12-31 00:00:00.000',
+    JWT_TOKEN = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyd...SfQ.SflKxwRJSMeKKF2QT4fwpMeJf36POk6yJV_adQssw5c',
+    LOGIN = 'example',
+    PASSWORD = 'password123',
 }

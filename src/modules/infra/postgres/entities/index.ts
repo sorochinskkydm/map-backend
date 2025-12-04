@@ -6,3 +6,4 @@ export * from './cluster-image.entity';
 export * from './request.entity';
 export * from './request-image.entity';
 export * from './cluster.entity';
+export * from './admin-token.entity';

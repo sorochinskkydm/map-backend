@@ -6,12 +6,14 @@ import { CategoryModule } from './categories/category.module';
 import { ObjectModule } from './objects/object.module';
 import { ClusterModule } from './clusters/cluster.module';
 import { RequestModule } from './requests/request.module';
+import { AuthModule } from './auth/auth.module';
 
 @Module({
     imports: [
         AutomapperModule.forRoot({
             strategyInitializer: classes(),
         }),
+        AuthModule,
         FileModule,
         CategoryModule,
         ObjectModule,
