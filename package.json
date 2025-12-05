@@ -1,6 +1,6 @@
 {
-  "name": "nnmap.service",
-  "version": "0.0.1",
+  "name": "nnmap.server",
+  "version": "1.0.1",
   "description": "",
   "author": "",
   "private": true,

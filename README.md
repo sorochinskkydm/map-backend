@@ -1,43 +1,4 @@
-# NNMAP.SERVICE
-
-## Installation
-
-```bash
-$ npm install
-```
-
-## Running the app
-
-```bash
-# development
-$ npm run start
-
-# watch mode
-$ npm run start:dev
-
-# production mode
-$ npm run start:prod
-```
-
-## Migrations
-
-### Generate migration
-
-```bash
-$  npm run migrations:generate --name=create-application-type
-```
-
-### Run migrations
-
-```bash
-$ npm run migrations:run
-```
-
-### Undo migration
-
-```bash
-$ npm run migrations:revert
-```
+# NNMAP.SERVER
 
 ## Переменные CI/CD
 

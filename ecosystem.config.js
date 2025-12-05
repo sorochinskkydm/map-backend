@@ -1,7 +1,7 @@
 module.exports = {
   apps: [
     {
-      name: 'cluster.service',
+      name: 'nnmap.server',
       script: 'dist/main.js',
     },
   ],
