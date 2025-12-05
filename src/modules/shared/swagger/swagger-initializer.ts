@@ -30,21 +30,20 @@ export class SwaggerInitializer {
     }
 
     private initializeSwagger(app: INestApplication) {
+        const securityScheme: any = {
+            type: 'http',
+            scheme: 'bearer',
+            bearerFormat: 'JWT',
+            name: 'Authorization',
+            description: 'Enter JWT token',
+            in: 'header',
+        };
         const config = new DocumentBuilder()
             .setTitle('nnmap.service')
             .setDescription('Креативная инфраструктура Нижнего Новгорода')
             .setVersion('1.0')
-            .addBearerAuth(
-                {
-                    type: 'http',
-                    scheme: 'bearer',
-                    bearerFormat: 'JWT',
-                    name: 'Authorization',
-                    description: 'Enter JWT token',
-                    in: 'header',
-                },
-                'Authorization',
-            )
+            .addBearerAuth(securityScheme, 'Authorization')
+            .addBearerAuth(securityScheme, 'RefreshToken')
             .build();
 
         const document = SwaggerModule.createDocument(app, config);

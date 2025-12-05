@@ -73,13 +73,15 @@ export class AuthService {
         return result.affected === 1;
     }
 
-    public async check(accessToken: string): Promise<string> {
-        const adminToken = await this.adminTokenRepository.findOne({ where: { accessToken } });
+    public async check(token: string): Promise<string> {
+        const adminToken = await this.adminTokenRepository.findOne({
+            where: [{ accessToken: token }, { refreshToken: token }],
+        });
 
         if (!adminToken) {
             throw new UnauthorizedException('Token is not valid');
         }
 
-        return accessToken;
+        return token;
     }
 }

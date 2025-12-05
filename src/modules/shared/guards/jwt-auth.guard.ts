@@ -1,10 +1,6 @@
 import { AuthService } from '@api/auth/auth.service';
-import { isDateConstructor } from '@automapper/core';
 import { AppJwtService } from '@infra/jwt/jwt.service';
-import { AdminTokenEntity } from '@infra/postgres/entities';
 import { CanActivate, ExecutionContext, Injectable, UnauthorizedException } from '@nestjs/common';
-import { InjectRepository } from '@nestjs/typeorm';
-import { Repository } from 'typeorm';
 @Injectable()
 export class JwtAuthGuard implements CanActivate {
     constructor(
