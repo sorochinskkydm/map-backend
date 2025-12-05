@@ -13,5 +13,4 @@
 | `SWAGGER_PASSWORD`  | Пароль для доступа к документации в Swagger |
 | `SWAGGER_PATH`      | Путь документации Swagger                   |
 | `SCALAR_PATH`       | Путь документации Scalar                    |
-| `GLOBAL_API_PREFIX` | Префикс документации Swagger                |
 | `SERVER_PORT`       | Порт сервера                                |
