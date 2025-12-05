@@ -17,6 +17,7 @@ import { RequestStatusEnum } from '@shared/enums';
 import { Transactional } from 'typeorm-transactional';
 import { UniversalPaginationDto } from '@shared/dtos';
 import { ObjectService } from '@api/objects/object.service';
+import { RequestGateway } from './request.gateway';
 
 @Injectable()
 export class RequestService {
@@ -30,6 +31,7 @@ export class RequestService {
         private readonly categoryService: CategoryService,
         private readonly fileService: FileService,
         private readonly objectService: ObjectService,
+        private readonly requestGateway: RequestGateway,
     ) {}
 
     public async exists(options: FindOneOptions<RequestEntity>): Promise<RequestEntity> {
@@ -65,6 +67,9 @@ export class RequestService {
             }
             await this.requestImageRepository.insert(imagesDto);
         }
+
+        this.requestGateway.sendOrder(request);
+
         return this.exists({ where: { id: request.id }, relations: { category: true } });
     }
 

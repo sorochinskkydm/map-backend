@@ -8,6 +8,7 @@ import { RequestService } from './request.service';
 import { FileModule } from '@api/files/file.module';
 import { RequestProfile } from './profiles';
 import { ObjectModule } from '@api/objects/object.module';
+import { RequestGateway } from './request.gateway';
 
 @Module({
     imports: [
@@ -18,7 +19,7 @@ import { ObjectModule } from '@api/objects/object.module';
         ObjectModule,
     ],
     controllers: [RequestController],
-    providers: [RequestService, RequestProfile],
+    providers: [RequestService, RequestProfile, RequestGateway],
     exports: [],
 })
 export class RequestModule {}
