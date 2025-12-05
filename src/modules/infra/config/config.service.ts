@@ -7,9 +7,6 @@ config();
 @Injectable()
 export class AppConfigService {
     constructor(private readonly configService: ConfigService) {}
-    get appEnv(): string {
-        return this.configService.getOrThrow<string>('APP_ENV');
-    }
     //DB
     get dbHost(): string {
         return this.configService.getOrThrow<string>('DB_HOST');
@@ -26,6 +23,7 @@ export class AppConfigService {
     get dbName(): string {
         return this.configService.getOrThrow<string>('DB_NAME');
     }
+
     //SWAGGER
     get swaggerDocLogin(): string {
         return this.configService.getOrThrow<string>('SWAGGER_LOGIN');
@@ -46,17 +44,18 @@ export class AppConfigService {
         return this.configService.get<number>('THROTTLER_LIMIT', 10);
     }
 
-    //SERVER
-    get serverPort(): number {
-        return this.configService.get<number>('SERVER_PORT', 3000);
-    }
-
     //JWT
+    get jwtAccessTtl(): number {
+        return this.configService.get<number>('JWT_ACCESS_TTL', 1);
+    }
     get jwtAccessSecretKey(): string {
         return this.configService.getOrThrow<string>('JWT_ACCESS_SECRET_KEY');
     }
-    get jwtAccessTtl(): number {
-        return this.configService.getOrThrow<number>('JWT_ACCESS_TTL');
+    get jwtRefreshTtl(): number {
+        return this.configService.get<number>('JWT_REFRESH_TTL', 168);
+    }
+    get jwtRefreshSecretKey(): string {
+        return this.configService.getOrThrow<string>('JWT_REFRESH_SECRET_KEY');
     }
 
     //AWS

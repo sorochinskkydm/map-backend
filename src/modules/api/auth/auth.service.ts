@@ -1,6 +1,6 @@
 import { AppJwtService } from '@infra/jwt/jwt.service';
 import { Injectable, UnauthorizedException } from '@nestjs/common';
-import { AuthTokenOutputDto, LoginInputDto } from './dtos';
+import { AuthTokenOutputDto, LoginInputDto, RefreshTokenInputDto } from './dtos';
 import { AppConfigService } from '@infra/config/config.service';
 import { InjectRepository } from '@nestjs/typeorm';
 import { AdminTokenEntity } from '@infra/postgres/entities';
@@ -29,10 +29,42 @@ export class AuthService {
 
         await this.adminTokenRepository.delete({ login: envLogin });
 
-        const { accessToken } = await this.jwtService.generateToken({ login, role: 'admin' });
-        const adminToken = this.adminTokenRepository.create({ login, accessToken });
-        this.adminTokenRepository.save(adminToken);
-        return { accessToken };
+        const { accessToken, refreshToken } = await this.jwtService.generateTokens({
+            login,
+            role: 'admin',
+        });
+        const adminToken = this.adminTokenRepository.create({ login, accessToken, refreshToken });
+        await this.adminTokenRepository.save(adminToken);
+        return { accessToken, refreshToken };
+    }
+
+    public async refreshToken(dto: RefreshTokenInputDto): Promise<AuthTokenOutputDto> {
+        const { oldRefreshToken } = dto;
+        const login = this.configService.adminLogin;
+        const payload = await this.jwtService.verifyRefreshToken(oldRefreshToken);
+
+        const adminToken = await this.adminTokenRepository.findOne({
+            where: { login: payload.login },
+        });
+
+        if (!adminToken) {
+            throw new UnauthorizedException('RefreshToken is not valid');
+        }
+
+        await this.adminTokenRepository.delete({ login });
+
+        const { accessToken, refreshToken } = await this.jwtService.generateTokens({
+            login: login,
+            role: 'admin',
+        });
+
+        const newAdminToken = this.adminTokenRepository.create({
+            login,
+            accessToken,
+            refreshToken,
+        });
+        await this.adminTokenRepository.save(newAdminToken);
+        return { accessToken, refreshToken };
     }
 
     public async logout(): Promise<Boolean> {

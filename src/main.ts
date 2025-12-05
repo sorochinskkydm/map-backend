@@ -28,7 +28,7 @@ async function bootstrap() {
     const swaggerInitializer = new SwaggerInitializer(configService);
     swaggerInitializer.init(app);
 
-    await app.listen(configService.serverPort, '0.0.0.0');
+    await app.listen(3000, '0.0.0.0');
     const url = await app.getUrl();
 
     logger.verbose(`Server started at ${url}`);

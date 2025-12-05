@@ -14,4 +14,8 @@ export class AdminTokenEntity {
     @AutoMap()
     @Column({ type: 'text' })
     accessToken: string;
+
+    @AutoMap()
+    @Column({ type: 'text' })
+    refreshToken: string;
 }
