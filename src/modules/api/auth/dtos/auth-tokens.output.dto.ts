@@ -9,4 +9,10 @@ export class AuthTokenOutputDto {
         example: ExampleValueEnum.JWT_TOKEN,
     })
     accessToken: string;
+
+    @AutoMap()
+    @ApiProperty({
+        example: ExampleValueEnum.JWT_TOKEN,
+    })
+    refreshToken: string;
 }

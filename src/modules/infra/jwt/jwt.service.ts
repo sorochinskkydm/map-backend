@@ -1,6 +1,6 @@
 import { inspect } from 'util';
 
-import { Injectable } from '@nestjs/common';
+import { Injectable, UnauthorizedException } from '@nestjs/common';
 import { JwtService } from '@nestjs/jwt';
 
 import { AppConfigService } from '@infra/config/config.service';
@@ -14,13 +14,18 @@ export class AppJwtService {
         private readonly configService: AppConfigService,
     ) {}
 
-    async generateToken(payload: TokenPayload): Promise<AuthTokenOutputDto> {
+    async generateTokens(payload: TokenPayload): Promise<AuthTokenOutputDto> {
         const accessToken = this.jwtService.sign(payload, {
             secret: this.configService.jwtAccessSecretKey,
-            expiresIn: this.configService.jwtAccessTtl,
+            expiresIn: `${this.configService.jwtAccessTtl}H`,
         });
 
-        return { accessToken };
+        const refreshToken = this.jwtService.sign(payload, {
+            secret: this.configService.jwtRefreshSecretKey,
+            expiresIn: `${this.configService.jwtRefreshTtl}H`,
+        });
+
+        return { accessToken, refreshToken };
     }
 
     async verifyAccessToken(token: string): Promise<TokenPayload> {
@@ -32,7 +37,17 @@ export class AppJwtService {
 
             return payload;
         } catch (error) {
-            throw new Error(`Invalid token: ${inspect(error)}`);
+            throw new UnauthorizedException('Token token is not valid');
+        }
+    }
+
+    async verifyRefreshToken(token: string): Promise<TokenPayload> {
+        try {
+            return this.jwtService.verify(token, {
+                secret: this.configService.jwtRefreshSecretKey,
+            });
+        } catch (error) {
+            throw new UnauthorizedException('Refresh token is not valid');
         }
     }
 }
