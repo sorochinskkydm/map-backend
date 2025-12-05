@@ -4,9 +4,15 @@ import { TypeOrmModule } from '@nestjs/typeorm';
 import typeormConfig, { typeOrmConfig } from '@infra/postgres/typeorm.config';
 import { ApiModule } from '@api/api.module';
 import { AppLoggerMiddleware } from '@shared/middlewares';
+import { AppWebSocketModule } from '@infra/websocket/websocket.module';
 
 @Module({
-    imports: [AppConfigModule, TypeOrmModule.forRootAsync(typeOrmConfig), ApiModule],
+    imports: [
+        AppConfigModule,
+        TypeOrmModule.forRootAsync(typeOrmConfig),
+        ApiModule,
+        AppWebSocketModule,
+    ],
     controllers: [],
     providers: [],
 })
