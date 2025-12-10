@@ -5,10 +5,13 @@ import { Logger, ValidationPipe, VersioningType } from '@nestjs/common';
 import { AppConfigService } from '@infra/config/config.service';
 import { AllExceptionsFilter } from '@shared/filters';
 import { SwaggerInitializer } from '@shared/swagger/swagger-initializer';
+import { NestExpressApplication } from '@nestjs/platform-express';
+import { join } from 'path';
+import { UPLOAD_PATH } from '@shared/constants';
 
 async function bootstrap() {
     initializeTransactionalContext();
-    const app = await NestFactory.create(AppModule);
+    const app = await NestFactory.create<NestExpressApplication>(AppModule);
     const logger = new Logger('MAIN');
     const configService = app.get(AppConfigService);
 
@@ -24,6 +27,12 @@ async function bootstrap() {
         }),
     );
     app.setGlobalPrefix('api');
+
+    const uploadsPath = join(process.cwd(), UPLOAD_PATH);
+
+    app.useStaticAssets(uploadsPath, {
+        prefix: '/uploads/',
+    });
 
     const swaggerInitializer = new SwaggerInitializer(configService);
     swaggerInitializer.init(app);

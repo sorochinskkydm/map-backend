@@ -3,7 +3,6 @@ import { Mapper, afterMap, createMap, forMember, ignore, mapFrom, mapWith } from
 import { AutomapperProfile, InjectMapper } from '@automapper/nestjs';
 import { Injectable } from '@nestjs/common';
 
-import { AwsService } from '@infra/aws/aws.service';
 import { CategoryEntity, FileEntity, ObjectEntity } from '@infra/postgres/entities';
 import { CategoryOutputDto } from '../dtos/category.output.dto';
 import { FileOutputDto } from '@api/files/dtos';

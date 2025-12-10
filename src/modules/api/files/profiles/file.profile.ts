@@ -3,7 +3,6 @@ import { Mapper, afterMap, createMap, forMember, ignore, mapFrom } from '@automa
 import { AutomapperProfile, InjectMapper } from '@automapper/nestjs';
 import { Injectable } from '@nestjs/common';
 
-import { AwsService } from '@infra/aws/aws.service';
 import { ClusterImageEntity, FileEntity } from '@infra/postgres/entities';
 
 import { FileOutputDto } from '../dtos';
@@ -11,10 +10,7 @@ import { FileWithSortOutputDto } from '../dtos/file-with-sort.output.dto';
 
 @Injectable()
 export class FileProfile extends AutomapperProfile {
-    constructor(
-        private readonly awsService: AwsService,
-        @InjectMapper() mapper: Mapper,
-    ) {
+    constructor(@InjectMapper() mapper: Mapper) {
         super(mapper);
     }
 
@@ -24,10 +20,10 @@ export class FileProfile extends AutomapperProfile {
                 mapper,
                 FileEntity,
                 FileOutputDto,
-                forMember((d) => d.url, ignore()),
-                afterMap(async (source, d) => {
-                    d.url = await this.awsService.getSignedUrl(source.url);
-                }),
+                forMember(
+                    (d) => d.url,
+                    mapFrom((source) => source.url),
+                ),
             );
             createMap(
                 mapper,
@@ -45,10 +41,10 @@ export class FileProfile extends AutomapperProfile {
                     (d) => d.size,
                     mapFrom((source) => source?.file?.size),
                 ),
-                forMember((d) => d.url, ignore()),
-                afterMap(async (source, d) => {
-                    d.url = await this.awsService.getSignedUrl(source.file?.url);
-                }),
+                forMember(
+                    (d) => d.url,
+                    mapFrom((source) => source?.file?.url),
+                ),
             );
         };
     }
