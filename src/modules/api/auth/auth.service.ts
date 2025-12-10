@@ -1,11 +1,12 @@
 import { AppJwtService } from '@infra/jwt/jwt.service';
 import { Injectable, UnauthorizedException } from '@nestjs/common';
-import { AuthTokenOutputDto, LoginInputDto, RefreshTokenInputDto } from './dtos';
+import { AuthTokenOutputDto, LoginInputDto } from './dtos';
 import { AppConfigService } from '@infra/config/config.service';
 import { InjectRepository } from '@nestjs/typeorm';
 import { AdminTokenEntity } from '@infra/postgres/entities';
 import { Repository } from 'typeorm';
 import { Transactional } from 'typeorm-transactional';
+import { Request } from 'express';
 
 @Injectable()
 export class AuthService {
@@ -38,9 +39,9 @@ export class AuthService {
         return { accessToken, refreshToken };
     }
 
-    public async refreshToken(dto: RefreshTokenInputDto): Promise<AuthTokenOutputDto> {
-        const { oldRefreshToken } = dto;
+    public async refreshToken(request: Request): Promise<AuthTokenOutputDto> {
         const login = this.configService.adminLogin;
+        const oldRefreshToken = request.headers.authorization!.replace('Bearer ', '');
         const payload = await this.jwtService.verifyRefreshToken(oldRefreshToken);
 
         const adminToken = await this.adminTokenRepository.findOne({

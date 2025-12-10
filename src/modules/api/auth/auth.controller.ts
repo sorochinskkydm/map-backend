@@ -1,8 +1,9 @@
-import { Body, Controller, HttpStatus, Post, UseGuards } from '@nestjs/common';
+import { Body, Controller, HttpStatus, Post, Req, UseGuards } from '@nestjs/common';
 import { ApiBearerAuth, ApiOperation, ApiResponse, ApiTags } from '@nestjs/swagger';
 import { AuthService } from './auth.service';
-import { AuthTokenOutputDto, LoginInputDto, RefreshTokenInputDto } from './dtos';
-import { JwtAuthGuard, JwtRefreshAuthGuard } from '@shared/guards';
+import { AuthTokenOutputDto, LoginInputDto } from './dtos';
+import { JwtRefreshAuthGuard } from '@shared/guards';
+import { Request } from 'express';
 
 @ApiTags('Авторизация')
 @Controller({ path: 'auth', version: '1' })
@@ -21,8 +22,8 @@ export class AuthController {
     @UseGuards(JwtRefreshAuthGuard)
     @ApiResponse({ type: AuthTokenOutputDto, status: HttpStatus.OK })
     @Post('refresh-token')
-    public async refreshToken(@Body() dto: RefreshTokenInputDto) {
-        return this.authService.refreshToken(dto);
+    public async refreshToken(@Req() request: Request) {
+        return this.authService.refreshToken(request);
     }
 
     @ApiOperation({ summary: 'Выход из аккаунта' })

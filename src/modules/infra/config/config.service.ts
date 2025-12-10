@@ -58,22 +58,7 @@ export class AppConfigService {
         return this.configService.getOrThrow<string>('JWT_REFRESH_SECRET_KEY');
     }
 
-    //AWS
-    get awsAccessKeyId(): string {
-        return this.configService.get<string>('AWS_ACCESS_KEY_ID', '');
-    }
-    get awsSecretAccessKey(): string {
-        return this.configService.get<string>('AWS_SECRET_ACCESS_KEY', '');
-    }
-    get awsBucket(): string {
-        return this.configService.get<string>('AWS_BUCKET', '');
-    }
-    get awsEndpoint(): string {
-        return this.configService.get<string>('AWS_ENDPOINT', '');
-    }
-
     //AUTH
-
     get adminLogin(): string {
         return this.configService.getOrThrow<string>('ADMIN_LOGIN');
     }
