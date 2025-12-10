@@ -56,7 +56,7 @@ export class FileService {
         const filename = `${Date.now()}${extension}`;
         fs.writeFileSync(path.join(uploadPath, filename), file.buffer);
 
-        const url = `${this.configService.baseUrl}/uploads/${folderPath}/${filename}`;
+        const url = `${this.configService.baseUrl}/api/uploads/${folderPath}/${filename}`;
 
         const result = this.fileRepository.create({
             url,

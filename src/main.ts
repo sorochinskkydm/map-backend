@@ -31,7 +31,7 @@ async function bootstrap() {
     const uploadsPath = join(process.cwd(), UPLOAD_PATH);
 
     app.useStaticAssets(uploadsPath, {
-        prefix: '/uploads/',
+        prefix: '/api/uploads/',
     });
 
     const swaggerInitializer = new SwaggerInitializer(configService);
