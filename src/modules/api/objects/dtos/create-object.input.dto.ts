@@ -49,7 +49,7 @@ export class CreateObjectInputDto {
 
     @ApiPropertyOptional({
         title: 'ИД ',
-        example: ExampleValueEnum.UUID,
+        example: [ExampleValueEnum.UUID],
     })
     @IsOptional()
     @IsString({ each: true })

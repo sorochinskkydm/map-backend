@@ -1,4 +1,4 @@
-export enum FilePathEnum {
+export enum UploadFolderPathEnum {
     OBJECT = 'objects',
     CLUSTER = 'clusters',
     REQUEST = 'requests',

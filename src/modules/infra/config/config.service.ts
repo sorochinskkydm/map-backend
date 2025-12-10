@@ -80,4 +80,9 @@ export class AppConfigService {
     get adminPassword(): string {
         return this.configService.getOrThrow<string>('ADMIN_PASSWORD');
     }
+
+    //SERVER
+    get baseUrl(): string {
+        return this.configService.getOrThrow<string>('BASE_URL');
+    }
 }

@@ -1,7 +1,7 @@
 import { ApiProperty } from '@nestjs/swagger';
 import { IsEnum, IsString } from 'class-validator';
 
-import { ExampleValueEnum, FilePathEnum } from '@shared/enums';
+import { ExampleValueEnum, UploadFolderPathEnum } from '@shared/enums';
 export class UploadFileInputDto {
     @ApiProperty({
         title: 'Тип файла',
@@ -12,10 +12,10 @@ export class UploadFileInputDto {
 
     @ApiProperty({
         title: 'Путь',
-        enum: FilePathEnum,
+        enum: UploadFolderPathEnum,
     })
-    @IsEnum(FilePathEnum)
-    path: string;
+    @IsEnum(UploadFolderPathEnum)
+    folderPath: string;
 
     @ApiProperty({
         type: 'string',
