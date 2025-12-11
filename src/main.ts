@@ -7,7 +7,6 @@ import { AllExceptionsFilter } from '@shared/filters';
 import { SwaggerInitializer } from '@shared/swagger/swagger-initializer';
 import { NestExpressApplication } from '@nestjs/platform-express';
 import { join } from 'path';
-import { UPLOAD_PATH } from '@shared/constants';
 
 async function bootstrap() {
     initializeTransactionalContext();
@@ -28,7 +27,7 @@ async function bootstrap() {
     );
     app.setGlobalPrefix('api');
 
-    const uploadsPath = join(process.cwd(), UPLOAD_PATH);
+    const uploadsPath = '/usr/shared_media';
 
     app.useStaticAssets(uploadsPath, {
         prefix: '/api/uploads/',

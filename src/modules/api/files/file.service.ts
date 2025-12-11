@@ -2,7 +2,6 @@ import { Injectable, Logger } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import { FindManyOptions, FindOneOptions, In, Repository } from 'typeorm';
 
-import { UPLOAD_PATH } from '@shared/constants';
 import { EntityNotFoundException } from '@shared/exceptions';
 
 import { FileEntity } from '@infra/postgres/entities';
@@ -33,16 +32,7 @@ export class FileService {
 
         return file;
     }
-
-    private existsMainFolder() {
-        const uploadPath = path.join(process.cwd(), UPLOAD_PATH);
-        if (!fs.existsSync(uploadPath)) {
-            fs.mkdirSync(uploadPath, { recursive: true });
-        }
-    }
-
     async upload(file: Express.Multer.File, dto: UploadFileInputDto): Promise<FileEntity> {
-        this.existsMainFolder();
         const { folderPath } = dto;
         const { mimetype, size } = file;
         const fullFolderPath = path.join('/usr/shared_media', folderPath);
