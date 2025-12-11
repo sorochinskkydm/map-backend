@@ -69,19 +69,25 @@ export class AuthService {
     }
 
     public async logout(): Promise<Boolean> {
+        //не удаляет
         const envLogin = this.configService.adminLogin;
         const result = await this.adminTokenRepository.delete({ login: envLogin });
         return result.affected === 1;
     }
 
     public async check(token: string): Promise<string> {
+        console.log(token, '<============== сheck token');
         const adminToken = await this.adminTokenRepository.findOne({
             where: [{ accessToken: token }, { refreshToken: token }],
         });
 
+        console.log(adminToken, '<============== сheck adminToken');
+
         if (!adminToken) {
             throw new UnauthorizedException('Token is not valid');
         }
+
+        console.log(token, '<============== сheck');
 
         return token;
     }

@@ -1,4 +1,4 @@
-import { Body, Controller, HttpStatus, Post, Req, UseGuards } from '@nestjs/common';
+import { Body, Controller, Delete, HttpStatus, Post, Req, UseGuards } from '@nestjs/common';
 import { ApiBearerAuth, ApiOperation, ApiResponse, ApiTags } from '@nestjs/swagger';
 import { AuthService } from './auth.service';
 import { AuthTokenOutputDto, LoginInputDto } from './dtos';
@@ -28,7 +28,7 @@ export class AuthController {
 
     @ApiOperation({ summary: 'Выход из аккаунта' })
     @ApiResponse({ type: Boolean, status: HttpStatus.OK })
-    @Post('sign-out')
+    @Delete('sign-out')
     public async logout() {
         return this.authService.logout();
     }
