@@ -20,9 +20,7 @@ RUN yarn run build # --verbose
 # этап production (production-stage)
 FROM ${IMAGE} AS runner
 
-# Создаем non-root пользователя для безопасности
-RUN useradd --create-home --shell /bin/bash appuser \
-    && apt-get update \
+RUN apt-get update \
     && apt-get install -y --no-install-recommends ca-certificates \
     && apt-get clean \
     && rm -rf /var/lib/apt/lists/* \
@@ -37,10 +35,6 @@ COPY package.json ./ yarn.lock ./
 RUN yarn install --production=true --frozen-lockfile
 
 COPY --from=build /usr/src/app/dist ./dist
-COPY --chown=appuser:appuser ecosystem.config.js ./
-
-# Переключаемся на non-root пользователя
-USER appuser
 
 # команда для запуска отдельного докер образа
 #CMD [ "node", "dist/main.js" ]
