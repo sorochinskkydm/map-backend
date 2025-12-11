@@ -45,8 +45,7 @@ export class FileService {
         this.existsMainFolder();
         const { folderPath } = dto;
         const { mimetype, size } = file;
-        const uploadPath = path.join(process.cwd(), UPLOAD_PATH, folderPath);
-        const fullFolderPath = path.join(process.cwd(), UPLOAD_PATH, folderPath);
+        const fullFolderPath = path.join('/usr/shared_media', folderPath);
 
         if (!fs.existsSync(fullFolderPath)) {
             fs.mkdirSync(fullFolderPath, { recursive: true });
@@ -54,7 +53,7 @@ export class FileService {
 
         const extension = path.extname(file.originalname);
         const filename = `${Date.now()}${extension}`;
-        fs.writeFileSync(path.join(uploadPath, filename), file.buffer);
+        fs.writeFileSync(path.join(fullFolderPath, filename), file.buffer);
 
         const url = `${this.configService.baseUrl}/api/uploads/${folderPath}/${filename}`;
 
