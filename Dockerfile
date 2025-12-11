@@ -38,7 +38,6 @@ RUN yarn install --production=true --frozen-lockfile
 
 COPY --from=build /usr/src/app/dist ./dist
 COPY --chown=appuser:appuser ecosystem.config.js ./
-COPY --chown=appuser:appuser /usr/shared_media ./
 
 # Переключаемся на non-root пользователя
 USER appuser
