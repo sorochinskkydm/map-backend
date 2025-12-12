@@ -1,7 +1,7 @@
 import { ObjectEntity, ObjectImageEntity } from '@infra/postgres/entities';
 import { Injectable, Logger } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
-import { DeepPartial, FindOneOptions, In, Not, Repository } from 'typeorm';
+import { DeepPartial, FindOneOptions, ILike, In, Not, Repository } from 'typeorm';
 import { CreateObjectInputDto, GetListObjectInputDto } from './dtos';
 import { FileService } from '@api/files/file.service';
 import { CategoryService } from '@api/categories/category.service';
@@ -89,10 +89,14 @@ export class ObjectService {
         { limit, skip, orderOptions }: UniversalPaginationDto,
         dto: GetListObjectInputDto,
     ): Promise<[ObjectEntity[], number]> {
-        const { categoryId, clusterId } = dto;
+        const { categoryId, clusterId, search } = dto;
         return this.objectRepository.findAndCount({
             relations: { category: { image: true }, cluster: true },
-            where: { category: { id: categoryId }, cluster: { id: clusterId } },
+            where: {
+                category: { id: categoryId },
+                cluster: { id: clusterId },
+                name: search ? ILike(`%${search}%`) : undefined,
+            },
             order: orderOptions,
             take: limit,
             skip,

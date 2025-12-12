@@ -35,6 +35,13 @@ export class CategoryDetailInfoOutputDto {
 
     @AutoMap()
     @ApiProperty({
+        title: 'Сортировка',
+        example: 1,
+    })
+    sort: number;
+
+    @AutoMap()
+    @ApiProperty({
         title: 'Количество объектов',
         example: 86,
     })
