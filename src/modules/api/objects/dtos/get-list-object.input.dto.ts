@@ -1,6 +1,6 @@
 import { ApiProperty, ApiPropertyOptional } from '@nestjs/swagger';
 import { ExampleValueEnum } from '@shared/enums';
-import { IsOptional, IsUUID } from 'class-validator';
+import { IsOptional, IsString, IsUUID } from 'class-validator';
 
 export class GetListObjectInputDto {
     @ApiPropertyOptional({
@@ -18,4 +18,12 @@ export class GetListObjectInputDto {
     @IsOptional()
     @IsUUID()
     clusterId: string;
+
+    @ApiPropertyOptional({
+        title: 'Поиск',
+        example: ExampleValueEnum.CLUSTER_NAME,
+    })
+    @IsOptional()
+    @IsString()
+    search: string;
 }
