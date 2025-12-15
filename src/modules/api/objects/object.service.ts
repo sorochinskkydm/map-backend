@@ -65,7 +65,7 @@ export class ObjectService {
         const category = await this.categoryService.exists({ where: { id: categoryId } });
         const cluster = clusterId
             ? await this.clusterService.exists({ where: { id: clusterId } })
-            : undefined;
+            : () => 'NULL';
         await this.objectRepository.update(id, { ...objectDto, category, cluster });
         if (fileIds && fileIds.length > 0) {
             const imagesDto: DeepPartial<ObjectImageEntity>[] = [];
