@@ -85,6 +85,18 @@ export class ObjectProfile extends AutomapperProfile {
                         );
                     }),
                 ),
+                forMember(
+                    (d) => d.category,
+                    mapWith(
+                        CategoryShortInfoOutputDto,
+                        CategoryEntity,
+                        (source) => source.category,
+                    ),
+                ),
+                forMember(
+                    (d) => d.cluster,
+                    mapWith(ClusterShortInfoOutputDto, ClusterEntity, (source) => source.cluster),
+                ),
             );
         };
     }

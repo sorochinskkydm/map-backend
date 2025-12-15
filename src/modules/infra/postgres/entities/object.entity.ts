@@ -30,7 +30,7 @@ export class ObjectEntity {
     address: string;
 
     @AutoMap()
-    @Column()
+    @Column({ nullable: true })
     url: string;
 
     @AutoMap()
@@ -64,7 +64,9 @@ export class ObjectEntity {
     })
     cluster: ClusterEntity;
 
-    @OneToMany(() => ObjectImageEntity, (image) => image.object)
+    @OneToMany(() => ObjectImageEntity, (image) => image.object, {
+        nullable: true,
+    })
     images: ObjectImageEntity[];
 
     @AutoMap()

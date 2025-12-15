@@ -7,6 +7,7 @@ import {
     HttpStatus,
     Param,
     ParseUUIDPipe,
+    Patch,
     Post,
     Query,
     UseGuards,
@@ -61,7 +62,7 @@ export class ObjectController {
 
     @ApiOperation({ summary: 'Обновление объекта' })
     @ApiResponse({ type: ObjectOutputDto, status: HttpStatus.OK })
-    @Post(':id')
+    @Patch(':id')
     async update(@Param('id', ParseUUIDPipe) id: string, @Body() dto: UpdateObjectInputDto) {
         const object = await this.objectService.update(id, dto);
         return this.mapper.mapAsync(object, ObjectEntity, ObjectOutputDto);
