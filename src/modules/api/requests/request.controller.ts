@@ -31,7 +31,6 @@ import { JwtAuthGuard } from '@shared/guards';
 
 @ApiTags('Заявки')
 @ApiBearerAuth('Authorization')
-@UseGuards(JwtAuthGuard)
 @Controller({ path: 'requests', version: '1' })
 export class RequestController {
     constructor(
@@ -48,6 +47,7 @@ export class RequestController {
         return this.mapper.mapAsync(request, RequestEntity, RequestOutputDto);
     }
 
+    @UseGuards(JwtAuthGuard)
     @ApiOperation({ summary: 'Получение списка заявок на размещение' })
     @ApiResponse({ type: [ListRequestOutputDto], status: HttpStatus.OK })
     @Get('list')
@@ -62,6 +62,7 @@ export class RequestController {
         };
     }
 
+    @UseGuards(JwtAuthGuard)
     @ApiOperation({ summary: 'Получение детальной информации о заявке' })
     @ApiResponse({ type: RequestDetailInfoOutputDto, status: HttpStatus.OK })
     @Get(':id')
@@ -70,6 +71,7 @@ export class RequestController {
         return this.mapper.mapAsync(request, RequestEntity, RequestDetailInfoOutputDto);
     }
 
+    @UseGuards(JwtAuthGuard)
     @ApiOperation({ summary: 'Модерация заявки' })
     @ApiResponse({ type: ModerateRequestOutputDto, status: HttpStatus.OK })
     @Patch(':id/moderate')
@@ -77,6 +79,7 @@ export class RequestController {
         return this.requestService.moderate(id, dto);
     }
 
+    @UseGuards(JwtAuthGuard)
     @ApiOperation({ summary: 'Редактирование заявки' })
     @ApiResponse({ type: Boolean, status: HttpStatus.OK })
     @Patch(':id')
@@ -84,6 +87,7 @@ export class RequestController {
         return this.requestService.update(id, dto);
     }
 
+    @UseGuards(JwtAuthGuard)
     @ApiOperation({ summary: 'Удаление заявки' })
     @ApiResponse({ type: Boolean, status: HttpStatus.OK })
     @Delete(':id')

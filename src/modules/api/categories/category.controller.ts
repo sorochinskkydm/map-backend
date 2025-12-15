@@ -28,7 +28,6 @@ import { JwtAuthGuard } from '@shared/guards';
 
 @ApiTags('Категории')
 @ApiBearerAuth('Authorization')
-@UseGuards(JwtAuthGuard)
 @Controller({ path: 'categories', version: '1' })
 export class CategoryController {
     constructor(
@@ -37,6 +36,7 @@ export class CategoryController {
         private readonly categoryService: CategoryService,
     ) {}
 
+    @UseGuards(JwtAuthGuard)
     @ApiOperation({ summary: 'Создание категории' })
     @ApiResponse({ type: CategoryOutputDto, status: HttpStatus.CREATED })
     @Post()
@@ -60,6 +60,7 @@ export class CategoryController {
         };
     }
 
+    @UseGuards(JwtAuthGuard)
     @ApiOperation({ summary: 'Редактирование категории по ИД' })
     @ApiResponse({ type: CategoryOutputDto, status: HttpStatus.OK })
     @Patch(':id')
@@ -68,6 +69,7 @@ export class CategoryController {
         return this.mapper.mapAsync(result, CategoryEntity, CategoryOutputDto);
     }
 
+    @UseGuards(JwtAuthGuard)
     @ApiOperation({ summary: 'Получить детальную информацию категории по ИД' })
     @ApiResponse({ type: CategoryDetailInfoOutputDto, status: HttpStatus.OK })
     @Get(':id')
@@ -76,6 +78,7 @@ export class CategoryController {
         return this.mapper.mapAsync(result, CategoryEntity, CategoryDetailInfoOutputDto);
     }
 
+    @UseGuards(JwtAuthGuard)
     @ApiOperation({ summary: 'Удаление категории по ИД' })
     @ApiResponse({ type: Boolean, status: HttpStatus.OK })
     @Delete(':id')
