@@ -28,7 +28,6 @@ import { JwtAuthGuard } from '@shared/guards';
 
 @ApiTags('Кластеры')
 @ApiBearerAuth('Authorization')
-@UseGuards(JwtAuthGuard)
 @Controller({ path: 'clusters', version: '1' })
 export class ClusterController {
     constructor(
@@ -51,6 +50,7 @@ export class ClusterController {
         };
     }
 
+    @UseGuards(JwtAuthGuard)
     @ApiOperation({ summary: 'Получение детальной информации кластера' })
     @ApiResponse({ type: ClusterDetailInfoOutputDto, status: HttpStatus.OK })
     @Get(':id')
@@ -59,6 +59,7 @@ export class ClusterController {
         return this.mapper.mapAsync(result, ClusterEntity, ClusterDetailInfoOutputDto);
     }
 
+    @UseGuards(JwtAuthGuard)
     @ApiOperation({ summary: 'Обновление кластера' })
     @ApiResponse({ type: ClusterOutputDto, status: HttpStatus.OK })
     @Patch(':id')
@@ -67,6 +68,7 @@ export class ClusterController {
         return this.mapper.mapAsync(result, ClusterEntity, ClusterOutputDto);
     }
 
+    @UseGuards(JwtAuthGuard)
     @ApiOperation({ summary: 'Удалить кластер' })
     @ApiResponse({ type: Boolean, status: HttpStatus.OK })
     @Delete(':id')

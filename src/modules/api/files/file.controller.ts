@@ -15,7 +15,6 @@ import { JwtAuthGuard } from '@shared/guards';
 
 @ApiTags('Файлы')
 @ApiBearerAuth('Authorization')
-@UseGuards(JwtAuthGuard)
 @Controller({ path: 'files', version: '1' })
 export class FileController {
     constructor(private readonly fileService: FileService) {}
