@@ -67,6 +67,12 @@ export class ObjectController {
         const object = await this.objectService.update(id, dto);
         return this.mapper.mapAsync(object, ObjectEntity, ObjectOutputDto);
     }
+    @ApiOperation({ summary: 'Включить / выключить флаг видимости объекта' })
+    @ApiResponse({ example: { isVisible: true }, status: HttpStatus.OK })
+    @Patch(':id/toggle')
+    async toggle(@Param('id', ParseUUIDPipe) id: string) {
+        return this.objectService.toggle(id);
+    }
 
     @ApiOperation({ summary: 'Удаление объекта' })
     @ApiResponse({ type: Boolean, status: HttpStatus.OK })

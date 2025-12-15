@@ -1,7 +1,9 @@
 import { CategoryShortInfoOutputDto } from '@api/categories/dtos';
+import { ClusterShortInfoOutputDto } from '@api/clusters/dtos';
 import { AutoMap } from '@automapper/classes';
 import { ApiProperty } from '@nestjs/swagger';
 import { ExampleValueEnum, RequestStatusEnum } from '@shared/enums';
+import { Transform } from 'class-transformer';
 
 export class RequestOutputDto {
     @AutoMap()
@@ -24,6 +26,20 @@ export class RequestOutputDto {
         example: ExampleValueEnum.ADDRESS,
     })
     address: string;
+
+    @AutoMap()
+    @ApiProperty({
+        title: 'Описание',
+        example: ExampleValueEnum.OBJECT_DESCRIPTION,
+    })
+    description: string;
+
+    @AutoMap()
+    @ApiProperty({
+        title: 'Описание',
+        example: ExampleValueEnum.SITE_URL,
+    })
+    url: string;
 
     @AutoMap()
     @ApiProperty({
@@ -80,4 +96,11 @@ export class RequestOutputDto {
         example: ExampleValueEnum.DATE_TIME,
     })
     createdAt: Date;
+
+    @AutoMap()
+    @ApiProperty({
+        title: 'Кластер',
+        type: ClusterShortInfoOutputDto,
+    })
+    cluster: ClusterShortInfoOutputDto;
 }

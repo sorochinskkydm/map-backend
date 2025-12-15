@@ -92,7 +92,7 @@ export class RequestService {
     public async getOne(id: string): Promise<RequestEntity> {
         return this.exists({
             where: { id },
-            relations: { category: true, images: { file: true } },
+            relations: { category: true, images: { file: true }, cluster: true },
         });
     }
 
