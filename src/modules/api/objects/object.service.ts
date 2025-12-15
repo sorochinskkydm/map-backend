@@ -60,13 +60,13 @@ export class ObjectService {
     }
     @Transactional()
     public async update(id: string, dto: UpdateObjectInputDto): Promise<ObjectEntity> {
-        const { fileIds, categoryId, clusterId } = dto;
+        const { fileIds, categoryId, clusterId, ...objectDto } = dto;
         const object = await this.exists({ where: { id } });
         const category = await this.categoryService.exists({ where: { id: categoryId } });
         const cluster = clusterId
             ? await this.clusterService.exists({ where: { id: clusterId } })
             : undefined;
-        await this.objectRepository.update(id, { ...dto, category, cluster });
+        await this.objectRepository.update(id, { ...objectDto, category, cluster });
         if (fileIds && fileIds.length > 0) {
             const imagesDto: DeepPartial<ObjectImageEntity>[] = [];
             for (const fileId of fileIds) {
@@ -107,5 +107,11 @@ export class ObjectService {
             where: { id },
             relations: { category: { image: true }, cluster: true, images: { file: true } },
         });
+    }
+
+    public async toggle(id: string): Promise<{ isVisible: boolean }> {
+        const object = await this.exists({ where: { id } });
+        const result = await this.objectRepository.update(id, { isVisible: !object.isVisible });
+        return { isVisible: !object.isVisible };
     }
 }

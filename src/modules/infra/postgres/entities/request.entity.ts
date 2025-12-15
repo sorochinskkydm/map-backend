@@ -13,6 +13,7 @@ import { CategoryEntity } from './category.entity';
 import { RequestStatusEnum } from '@shared/enums';
 import { ClusterEntity } from './cluster.entity';
 import { RequestImageEntity } from './request-image.entity';
+import { ColumnNumericTransformer } from '../transformers';
 
 @Entity('requests')
 export class RequestEntity {
@@ -45,11 +46,11 @@ export class RequestEntity {
     status: RequestStatusEnum;
 
     @AutoMap()
-    @Column({ type: 'decimal', nullable: true })
+    @Column({ type: 'decimal', nullable: true, transformer: new ColumnNumericTransformer() })
     latitude: number;
 
     @AutoMap()
-    @Column({ type: 'decimal', nullable: true })
+    @Column({ type: 'decimal', nullable: true, transformer: new ColumnNumericTransformer() })
     longitude: number;
 
     @AutoMap()

@@ -14,6 +14,7 @@ import {
 import { CategoryEntity } from './category.entity';
 import { ClusterEntity } from './cluster.entity';
 import { ObjectImageEntity } from './object-image.entity';
+import { ColumnNumericTransformer } from '../transformers';
 
 @Entity('objects')
 export class ObjectEntity {
@@ -46,11 +47,11 @@ export class ObjectEntity {
     isVisible: boolean;
 
     @AutoMap()
-    @Column({ type: 'decimal', nullable: true })
+    @Column({ type: 'decimal', nullable: true, transformer: new ColumnNumericTransformer() })
     latitude: number;
 
     @AutoMap()
-    @Column({ type: 'decimal', nullable: true })
+    @Column({ type: 'decimal', nullable: true, transformer: new ColumnNumericTransformer() })
     longitude: number;
 
     @ManyToOne(() => CategoryEntity, (category) => category.objects, {

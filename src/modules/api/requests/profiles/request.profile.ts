@@ -3,10 +3,11 @@ import { Mapper, createMap, forMember, mapFrom, mapWith } from '@automapper/core
 import { AutomapperProfile, InjectMapper } from '@automapper/nestjs';
 import { Injectable } from '@nestjs/common';
 
-import { CategoryEntity, FileEntity, RequestEntity } from '@infra/postgres/entities';
+import { CategoryEntity, ClusterEntity, FileEntity, RequestEntity } from '@infra/postgres/entities';
 import { CategoryShortInfoOutputDto } from '@api/categories/dtos';
 import { RequestDetailInfoOutputDto, RequestOutputDto } from '../dtos';
 import { FileOutputDto } from '@api/files/dtos';
+import { ClusterShortInfoOutputDto } from '@api/clusters/dtos';
 
 @Injectable()
 export class RequestProfile extends AutomapperProfile {
@@ -40,6 +41,10 @@ export class RequestProfile extends AutomapperProfile {
                         CategoryEntity,
                         (source) => source.category,
                     ),
+                ),
+                forMember(
+                    (d) => d.cluster,
+                    mapWith(ClusterShortInfoOutputDto, ClusterEntity, (source) => source.cluster),
                 ),
                 forMember(
                     (d) => d.files,
