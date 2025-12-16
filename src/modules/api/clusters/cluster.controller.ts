@@ -50,7 +50,6 @@ export class ClusterController {
         };
     }
 
-    @UseGuards(JwtAuthGuard)
     @ApiOperation({ summary: 'Получение детальной информации кластера' })
     @ApiResponse({ type: ClusterDetailInfoOutputDto, status: HttpStatus.OK })
     @Get(':id')
