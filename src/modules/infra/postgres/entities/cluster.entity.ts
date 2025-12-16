@@ -27,7 +27,7 @@ export class ClusterEntity {
     name: string;
 
     @AutoMap()
-    @Column()
+    @Column({ nullable: true })
     url: string;
 
     @AutoMap()

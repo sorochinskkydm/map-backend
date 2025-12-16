@@ -3,11 +3,10 @@ import { ExampleValueEnum } from '@shared/enums';
 import { IsOptional, IsString } from 'class-validator';
 
 export class UpdateClusterInputDto {
-    @ApiPropertyOptional({
+    @ApiProperty({
         title: 'Название',
         example: ExampleValueEnum.CLUSTER_NAME,
     })
-    @IsOptional()
     @IsString()
     name: string;
 
@@ -27,11 +26,10 @@ export class UpdateClusterInputDto {
     @IsString()
     url: string;
 
-    @ApiPropertyOptional({
+    @ApiProperty({
         title: 'Описание',
         example: ExampleValueEnum.CLUSTER_DESCRIPTION,
     })
-    @IsOptional()
     @IsString()
     description: string;
 

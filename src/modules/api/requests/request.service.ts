@@ -97,7 +97,7 @@ export class RequestService {
     }
 
     public async update(id: string, dto: UpdateRequestInputDto): Promise<Boolean> {
-        const { categoryId, clusterId, fileIds, latitude, status, ...requestDto } = dto;
+        const { categoryId, clusterId, fileIds, status, ...requestDto } = dto;
         const request = await this.exists({ where: { id } });
 
         let cluster: ClusterEntity | (() => string) = () => 'NULL';
@@ -122,6 +122,8 @@ export class RequestService {
             }
             await this.requestImageRepository.upsert(imagesDto, ['request', 'file']);
             await this.requestImageRepository.delete({ request: { id }, file: Not(In(fileIds)) });
+        } else {
+            await this.requestImageRepository.delete({ request: { id } });
         }
         return result.affected === 1;
     }
