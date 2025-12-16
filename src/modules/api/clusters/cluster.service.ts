@@ -51,14 +51,19 @@ export class ClusterService {
     public async update(id: string, dto: UpdateClusterInputDto): Promise<ClusterEntity> {
         const { fileIds, ...clusterDto } = dto;
         await this.exists({ where: { id } });
-        const imagesDto: DeepPartial<ClusterImageEntity>[] = [];
-        for (const fileId of fileIds) {
-            await this.fileService.exists({ where: { id: fileId } });
-            imagesDto.push({ cluster: { id }, file: { id: fileId } });
-        }
+
         await this.clusterRepository.update(id, { ...clusterDto });
-        await this.clusterImageRepository.upsert(imagesDto, ['cluster', 'file']);
-        await this.clusterImageRepository.delete({ cluster: { id }, file: Not(In(fileIds)) });
+        const imagesDto: DeepPartial<ClusterImageEntity>[] = [];
+        if (fileIds && fileIds.length > 0) {
+            for (const fileId of fileIds) {
+                await this.fileService.exists({ where: { id: fileId } });
+                imagesDto.push({ cluster: { id: id }, file: { id: fileId } });
+            }
+            await this.clusterImageRepository.upsert(imagesDto, ['cluster', 'file']);
+            await this.clusterImageRepository.delete({ cluster: { id }, file: Not(In(fileIds)) });
+        } else {
+            await this.clusterImageRepository.delete({ cluster: { id } });
+        }
         return this.exists({
             where: { id },
             relations: { images: { file: true }, objects: true },

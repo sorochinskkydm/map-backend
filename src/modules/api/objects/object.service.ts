@@ -75,6 +75,8 @@ export class ObjectService {
             }
             await this.objectImageRepository.upsert(imagesDto, ['object', 'file']);
             await this.objectImageRepository.delete({ object: { id }, file: Not(In(fileIds)) });
+        } else {
+            await this.objectImageRepository.delete({ object: { id } });
         }
         return this.exists({ where: { id }, relations: { category: true, cluster: true } });
     }

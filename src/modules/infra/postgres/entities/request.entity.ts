@@ -34,6 +34,10 @@ export class RequestEntity {
     address: string;
 
     @AutoMap()
+    @Column({ nullable: true })
+    url: string;
+
+    @AutoMap()
     @Column()
     phoneNumber: string;
 
@@ -46,20 +50,16 @@ export class RequestEntity {
     status: RequestStatusEnum;
 
     @AutoMap()
+    @Column()
+    description: string;
+
+    @AutoMap()
     @Column({ type: 'decimal', nullable: true, transformer: new ColumnNumericTransformer() })
     latitude: number;
 
     @AutoMap()
     @Column({ type: 'decimal', nullable: true, transformer: new ColumnNumericTransformer() })
     longitude: number;
-
-    @AutoMap()
-    @Column()
-    url: string;
-
-    @AutoMap()
-    @Column()
-    description: string;
 
     @ManyToOne(() => ClusterEntity, (cluster) => cluster.requests, {
         onDelete: 'CASCADE',
