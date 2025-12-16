@@ -28,7 +28,6 @@ import { UpdateObjectInputDto } from './dtos/update-object.input.dto';
 import { JwtAuthGuard } from '@shared/guards';
 
 @ApiBearerAuth('Authorization')
-@UseGuards(JwtAuthGuard)
 @ApiTags('Объекты')
 @Controller({ path: 'objects', version: '1' })
 export class ObjectController {
@@ -38,6 +37,7 @@ export class ObjectController {
         private readonly objectService: ObjectService,
     ) {}
 
+    @UseGuards(JwtAuthGuard)
     @ApiOperation({ summary: 'Создание объекта' })
     @ApiResponse({ type: ObjectOutputDto, status: HttpStatus.CREATED })
     @Post()
@@ -60,6 +60,7 @@ export class ObjectController {
         };
     }
 
+    @UseGuards(JwtAuthGuard)
     @ApiOperation({ summary: 'Обновление объекта' })
     @ApiResponse({ type: ObjectOutputDto, status: HttpStatus.OK })
     @Patch(':id')
@@ -67,6 +68,8 @@ export class ObjectController {
         const object = await this.objectService.update(id, dto);
         return this.mapper.mapAsync(object, ObjectEntity, ObjectOutputDto);
     }
+
+    @UseGuards(JwtAuthGuard)
     @ApiOperation({ summary: 'Включить / выключить флаг видимости объекта' })
     @ApiResponse({ example: { isVisible: true }, status: HttpStatus.OK })
     @Patch(':id/toggle')
@@ -74,6 +77,7 @@ export class ObjectController {
         return this.objectService.toggle(id);
     }
 
+    @UseGuards(JwtAuthGuard)
     @ApiOperation({ summary: 'Удаление объекта' })
     @ApiResponse({ type: Boolean, status: HttpStatus.OK })
     @Delete(':id')
