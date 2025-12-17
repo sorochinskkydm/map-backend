@@ -5,6 +5,8 @@ import typeormConfig, { typeOrmConfig } from '@infra/postgres/typeorm.config';
 import { ApiModule } from '@api/api.module';
 import { AppLoggerMiddleware } from '@shared/middlewares';
 import { AppWebSocketModule } from '@infra/websocket/websocket.module';
+import { APP_INTERCEPTOR } from '@nestjs/core';
+import { SignatureInterceptor } from '@shared/interceptors';
 
 @Module({
     imports: [
@@ -14,7 +16,12 @@ import { AppWebSocketModule } from '@infra/websocket/websocket.module';
         AppWebSocketModule,
     ],
     controllers: [],
-    providers: [],
+    providers: [
+        {
+            provide: APP_INTERCEPTOR,
+            useClass: SignatureInterceptor,
+        },
+    ],
 })
 export class AppModule {
     configure(consumer: MiddlewareConsumer) {

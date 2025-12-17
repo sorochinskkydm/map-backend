@@ -1,5 +1,5 @@
 import type { INestApplication } from '@nestjs/common';
-import { DocumentBuilder, SwaggerModule } from '@nestjs/swagger';
+import { DocumentBuilder, OpenAPIObject, SwaggerModule } from '@nestjs/swagger';
 import { apiReference } from '@scalar/nestjs-api-reference';
 import * as basicAuth from 'express-basic-auth';
 
@@ -44,6 +44,15 @@ export class SwaggerInitializer {
             .setVersion('1.0')
             .addBearerAuth(securityScheme, 'Authorization')
             .addBearerAuth(securityScheme, 'RefreshToken')
+            .addApiKey(
+                {
+                    type: 'apiKey',
+                    name: 'x-signature',
+                    in: 'header',
+                    description: 'Enter your signature',
+                },
+                'Signature',
+            )
             .build();
 
         const document = SwaggerModule.createDocument(app, config);
@@ -51,11 +60,27 @@ export class SwaggerInitializer {
             swaggerOptions: { persistAuthorization: true },
         });
 
+        this.addApiKey(document);
+
         app.use(
             this.configService.scalarDocPath,
             apiReference({
                 content: document,
             }),
         );
+    }
+
+    private addApiKey(document: OpenAPIObject): void {
+        Object.entries(document.paths).forEach(([_, methods]) => {
+            Object.entries(methods).forEach(([_, operation]) => {
+                if (operation && operation.security) {
+                    operation.security.forEach((secRequirement) => {
+                        secRequirement['Signature'] = [];
+                    });
+                } else if (operation) {
+                    operation.security = [{ Signature: [] }];
+                }
+            });
+        });
     }
 }
