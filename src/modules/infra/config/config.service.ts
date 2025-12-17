@@ -65,6 +65,9 @@ export class AppConfigService {
     get adminPassword(): string {
         return this.configService.getOrThrow<string>('ADMIN_PASSWORD');
     }
+    get adminMail(): string {
+        return this.configService.getOrThrow<string>('ADMIN_MAIL');
+    }
 
     //SERVER
     get baseUrl(): string {
@@ -74,5 +77,13 @@ export class AppConfigService {
     //ENCRYPTION
     get encryptionKey(): string {
         return this.configService.getOrThrow<string>('ENCRYPTION_KEY');
+    }
+
+    //MAIL
+    get mailUser(): string {
+        return this.configService.getOrThrow<string>('MAIL_USER');
+    }
+    get mailPassword(): string {
+        return this.configService.getOrThrow<string>('MAIL_PASSWORD');
     }
 }

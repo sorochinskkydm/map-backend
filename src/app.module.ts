@@ -7,6 +7,7 @@ import { AppLoggerMiddleware } from '@shared/middlewares';
 import { AppWebSocketModule } from '@infra/websocket/websocket.module';
 import { APP_INTERCEPTOR } from '@nestjs/core';
 import { SignatureInterceptor } from '@shared/interceptors';
+import { MailModule } from '@infra/mail/mail.module';
 
 @Module({
     imports: [
@@ -14,6 +15,7 @@ import { SignatureInterceptor } from '@shared/interceptors';
         TypeOrmModule.forRootAsync(typeOrmConfig),
         ApiModule,
         AppWebSocketModule,
+        MailModule,
     ],
     controllers: [],
     providers: [
