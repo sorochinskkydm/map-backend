@@ -70,4 +70,9 @@ export class AppConfigService {
     get baseUrl(): string {
         return this.configService.getOrThrow<string>('BASE_URL');
     }
+
+    //ENCRYPTION
+    get encryptionKey(): string {
+        return this.configService.getOrThrow<string>('ENCRYPTION_KEY');
+    }
 }
