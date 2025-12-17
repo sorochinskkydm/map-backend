@@ -13,11 +13,14 @@ import { ClusterService } from '@api/clusters/cluster.service';
 import { CategoryService } from '@api/categories/category.service';
 import { FileService } from '@api/files/file.service';
 import { EntityNotFoundException } from '@shared/exceptions';
-import { RequestStatusEnum } from '@shared/enums';
+import { MailSubjectEnum, RequestStatusEnum } from '@shared/enums';
 import { Transactional } from 'typeorm-transactional';
 import { UniversalPaginationDto } from '@shared/dtos';
 import { ObjectService } from '@api/objects/object.service';
 import { RequestGateway } from './request.gateway';
+import { MailService } from '@infra/mail/mail.service';
+import { SendMailInputDto } from '@infra/mail/dtos';
+import { buildRequestHtml } from '@shared/helpers';
 
 @Injectable()
 export class RequestService {
@@ -32,6 +35,7 @@ export class RequestService {
         private readonly fileService: FileService,
         private readonly objectService: ObjectService,
         private readonly requestGateway: RequestGateway,
+        private readonly mailService: MailService,
     ) {}
 
     public async exists(options: FindOneOptions<RequestEntity>): Promise<RequestEntity> {
@@ -68,9 +72,20 @@ export class RequestService {
             await this.requestImageRepository.insert(imagesDto);
         }
 
-        this.requestGateway.sendOrder(request);
+        const result = await this.exists({
+            where: { id: request.id },
+            relations: { category: true },
+        });
 
-        return this.exists({ where: { id: request.id }, relations: { category: true } });
+        const mailDto: SendMailInputDto = {
+            subject: MailSubjectEnum.NEW_REQUEST,
+            html: buildRequestHtml(result),
+        };
+
+        this.requestGateway.sendOrder(request);
+        await this.mailService.send(mailDto);
+
+        return result;
     }
 
     public async getList(
