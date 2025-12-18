@@ -24,9 +24,9 @@ export function buildRequestHtml(request: RequestEntity): string {
         <li><strong>Название:</strong> ${organizationName}</li>
         <li><strong>Описание:</strong> ${description}</li>
         <li><strong>Адрес:</strong> ${address}</li>
-        <li><strong>Категория:</strong> ${category.name}</li>
+        <li><strong>Категория:</strong> ${category?.name}</li>
         <li><strong>Ссылка:</strong> ${url ?? 'Отсутствует'}</li>
-        <li><strong>Кластер:</strong> ${cluster.name ?? 'Отсутствует'}</li>
+        <li><strong>Кластер:</strong> ${cluster?.name ?? 'Отсутствует'}</li>
         <li><strong>Дата подачи заявки:</strong> ${formatDate(createdAt, 'yyyy-MM-dd')}</li>
     </ul>
     <br>
