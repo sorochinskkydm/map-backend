@@ -74,7 +74,7 @@ export class RequestService {
 
         const result = await this.exists({
             where: { id: request.id },
-            relations: { category: true },
+            relations: { category: true, cluster: true },
         });
 
         const mailDto: SendMailInputDto = {
