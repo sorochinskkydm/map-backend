@@ -25,10 +25,6 @@ FROM ${IMAGE} AS runner
 RUN groupadd -g 1001 appgroup \
     && useradd -u 1001 -g appgroup --create-home --shell /bin/bash appuser
 
-# Настраиваем права для shared_media
-RUN chgrp appgroup /usr/shared_files \
-    && chmod g+rwx /usr/shared_files
-
 RUN apt-get update \
     && apt-get install -y --no-install-recommends ca-certificates \
     && apt-get clean \
