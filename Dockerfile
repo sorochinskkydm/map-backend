@@ -42,10 +42,6 @@ RUN yarn install --production=true --frozen-lockfile
 COPY --from=build /usr/src/app/dist ./dist
 COPY --chown=appuser:appuser ecosystem.config.js ./
 
-# Переключаемся на non-root пользователя
-USER appuser
-
-
 # команда для запуска отдельного докер образа
 #CMD [ "node", "dist/main.js" ]
 # команда для запуска отдельного докер образа (через pm2)
