@@ -1,4 +1,5 @@
 ARG IMAGE=node:24.11.1-slim
+ARG VOLUME_PATH=../home/deploy/app/shared_media
 
 FROM ${IMAGE} AS build
 
@@ -20,6 +21,14 @@ RUN yarn run build # --verbose
 # этап production (production-stage)
 FROM ${IMAGE} AS runner
 
+# Создаем APPUSER и группу для безопасности
+RUN groupadd -g 1001 appgroup \
+    && useradd -u 1001 -g appgroup --create-home --shell /bin/bash appuser
+
+# Настраиваем права для shared_media
+RUN chgrp appgroup /usr/shared_files \
+    && chmod g+rwx /usr/shared_files
+
 RUN apt-get update \
     && apt-get install -y --no-install-recommends ca-certificates \
     && apt-get clean \
@@ -35,6 +44,11 @@ COPY package.json ./ yarn.lock ./
 RUN yarn install --production=true --frozen-lockfile
 
 COPY --from=build /usr/src/app/dist ./dist
+COPY --chown=appuser:appuser ecosystem.config.js ./
+
+# Переключаемся на non-root пользователя
+USER appuser
+
 
 # команда для запуска отдельного докер образа
 #CMD [ "node", "dist/main.js" ]
