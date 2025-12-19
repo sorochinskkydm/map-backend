@@ -1,5 +1,4 @@
 ARG IMAGE=node:24.11.1-slim
-ARG VOLUME_PATH=../home/deploy/app/shared_media
 
 FROM ${IMAGE} AS build
 
@@ -41,6 +40,9 @@ RUN yarn install --production=true --frozen-lockfile
 
 COPY --from=build /usr/src/app/dist ./dist
 COPY --chown=appuser:appuser ecosystem.config.js ./
+
+# Переключаемся на non-root пользователя
+USER appuser
 
 # команда для запуска отдельного докер образа
 #CMD [ "node", "dist/main.js" ]
