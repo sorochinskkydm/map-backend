@@ -1,4 +1,6 @@
 ARG IMAGE=node:24.11.1-slim
+ARG USER_ID=1001
+ARG GROUP_ID=1001
 
 FROM ${IMAGE} AS build
 
@@ -21,8 +23,8 @@ RUN yarn run build # --verbose
 FROM ${IMAGE} AS runner
 
 # Создаем APPUSER и группу для безопасности
-RUN groupadd -g 1001 appgroup \
-    && useradd -u 1001 -g appgroup --create-home --shell /bin/bash appuser
+RUN groupadd -g ${GROUP_ID} appgroup \
+    && useradd -u ${USER_ID} -g appgroup --create-home --shell /bin/bash appuser
 
 RUN apt-get update \
     && apt-get install -y --no-install-recommends ca-certificates \
