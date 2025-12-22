@@ -38,10 +38,10 @@ export class AppConfigService {
         return this.configService.get<string>('SCALAR_PATH', '/docs/scalar');
     }
     get throttlerTtl(): number {
-        return this.configService.get<number>('THROTTLER_TTL', 1);
+        return this.configService.get<number>('THROTTLER_TTL', 1000);
     }
     get throttlerLimit(): number {
-        return this.configService.get<number>('THROTTLER_LIMIT', 10);
+        return this.configService.get<number>('THROTTLER_LIMIT', 100);
     }
 
     //JWT
