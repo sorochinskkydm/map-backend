@@ -24,7 +24,7 @@ FROM ${IMAGE} AS runner
 
 # Создаем APPUSER и группу для безопасности
 RUN groupadd -g ${GROUP_ID} appgroup \
-    && useradd -u ${USER_ID} -g appgroup --create-home --shell /bin/bash appuser
+    && useradd -u ${USER_ID} -g ${GROUP_ID} --create-home --shell /bin/bash appuse
 
 RUN apt-get update \
     && apt-get install -y --no-install-recommends ca-certificates \
