@@ -1,6 +1,6 @@
 import { ApiProperty, ApiPropertyOptional } from '@nestjs/swagger';
 import { ExampleValueEnum } from '@shared/enums';
-import { IsOptional, IsString } from 'class-validator';
+import { IsJSON, IsObject, IsOptional, IsString } from 'class-validator';
 
 export class UpdateClusterInputDto {
     @ApiProperty({
@@ -32,6 +32,14 @@ export class UpdateClusterInputDto {
     })
     @IsString()
     description: string;
+
+    @ApiPropertyOptional({
+        title: 'Настройки',
+        example: JSON.stringify({ example: 'value' }),
+    })
+    @IsOptional()
+    @IsObject()
+    options: any;
 
     @ApiPropertyOptional({
         title: 'ИД Файлов',

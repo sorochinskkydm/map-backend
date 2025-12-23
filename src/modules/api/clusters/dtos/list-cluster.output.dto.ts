@@ -37,4 +37,11 @@ export class ListClusterOutputDto {
         example: 1,
     })
     sort: number;
+
+    @AutoMap()
+    @ApiProperty({
+        title: 'Параметры',
+        example: JSON.stringify({ example: 'value' }),
+    })
+    options: JSON;
 }

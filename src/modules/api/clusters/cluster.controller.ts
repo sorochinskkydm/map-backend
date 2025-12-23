@@ -25,9 +25,11 @@ import {
 import { CategoryOutputDto } from '@api/categories/dtos';
 import { UniversalPaginationDto } from '@shared/dtos';
 import { JwtAuthGuard } from '@shared/guards';
+import { ThrottlerGuard } from '@nestjs/throttler';
 
 @ApiTags('Кластеры')
 @ApiBearerAuth('Authorization')
+@UseGuards(ThrottlerGuard)
 @Controller({ path: 'clusters', version: '1' })
 export class ClusterController {
     constructor(

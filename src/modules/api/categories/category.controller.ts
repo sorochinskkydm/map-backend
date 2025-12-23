@@ -25,8 +25,10 @@ import { CategoryService } from './category.service';
 import { ListCategoryOutputDto } from './dtos/list-category.output.dto';
 import { UniversalPaginationDto } from '@shared/dtos';
 import { JwtAuthGuard } from '@shared/guards';
+import { ThrottlerGuard } from '@nestjs/throttler';
 
 @ApiTags('Категории')
+@UseGuards(ThrottlerGuard)
 @ApiBearerAuth('Authorization')
 @Controller({ path: 'categories', version: '1' })
 export class CategoryController {

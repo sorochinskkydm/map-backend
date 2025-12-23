@@ -26,8 +26,10 @@ import { InjectMapper } from '@automapper/nestjs';
 import { UniversalPaginationDto } from '@shared/dtos';
 import { UpdateObjectInputDto } from './dtos/update-object.input.dto';
 import { JwtAuthGuard } from '@shared/guards';
+import { ThrottlerGuard } from '@nestjs/throttler';
 
 @ApiBearerAuth('Authorization')
+@UseGuards(ThrottlerGuard)
 @ApiTags('Объекты')
 @Controller({ path: 'objects', version: '1' })
 export class ObjectController {

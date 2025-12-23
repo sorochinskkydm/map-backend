@@ -48,6 +48,13 @@ export class ClusterOutputDto {
 
     @AutoMap()
     @ApiProperty({
+        title: 'Настройки',
+        example: JSON.stringify({ example: 'value' }),
+    })
+    options: JSON;
+
+    @AutoMap()
+    @ApiProperty({
         title: 'Изображения',
         type: [FileOutputDto],
     })

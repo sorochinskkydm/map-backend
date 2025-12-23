@@ -28,8 +28,10 @@ import {
 import { RequestEntity } from '@infra/postgres/entities';
 import { UniversalPaginationDto } from '@shared/dtos';
 import { JwtAuthGuard } from '@shared/guards';
+import { ThrottlerGuard } from '@nestjs/throttler';
 
 @ApiTags('Заявки')
+@UseGuards(ThrottlerGuard)
 @ApiBearerAuth('Authorization')
 @Controller({ path: 'requests', version: '1' })
 export class RequestController {
