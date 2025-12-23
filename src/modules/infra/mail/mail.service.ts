@@ -15,7 +15,7 @@ export class MailService {
         const { subject, html } = dto;
         try {
             const result = await this.mailerService.sendMail({
-                to: this.configService.adminMail,
+                to: this.configService.notificationMail,
                 from: this.configService.mailUser,
                 subject,
                 html,

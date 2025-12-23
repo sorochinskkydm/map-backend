@@ -59,14 +59,14 @@ export class AppConfigService {
     }
 
     //AUTH
-    get adminLogin(): string {
-        return this.configService.getOrThrow<string>('ADMIN_LOGIN');
+    get panelAdminLogin(): string {
+        return this.configService.getOrThrow<string>('PANEL_ADMIN_LOGIN');
     }
-    get adminPassword(): string {
-        return this.configService.getOrThrow<string>('ADMIN_PASSWORD');
+    get panelAdminPassword(): string {
+        return this.configService.getOrThrow<string>('PANEL_ADMIN_PASSWORD');
     }
-    get adminMail(): string {
-        return this.configService.getOrThrow<string>('ADMIN_MAIL');
+    get notificationMail(): string {
+        return this.configService.getOrThrow<string>('NOTIFICATION_MAIL');
     }
 
     //SERVER
