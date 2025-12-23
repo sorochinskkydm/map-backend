@@ -21,8 +21,8 @@ export class AuthService {
     public async login(dto: LoginInputDto): Promise<AuthTokenOutputDto> {
         const { login, password } = dto;
 
-        const envLogin = this.configService.adminLogin;
-        const envPassword = this.configService.adminPassword;
+        const envLogin = this.configService.panelAdminLogin;
+        const envPassword = this.configService.panelAdminPassword;
 
         if (login !== envLogin || password !== envPassword) {
             throw new UnauthorizedException('Login or password is incorrect');
@@ -40,7 +40,7 @@ export class AuthService {
     }
 
     public async refreshToken(request: Request): Promise<AuthTokenOutputDto> {
-        const login = this.configService.adminLogin;
+        const login = this.configService.panelAdminLogin;
         const oldRefreshToken = request.headers.authorization!.replace('Bearer ', '');
         const payload = await this.jwtService.verifyRefreshToken(oldRefreshToken);
 
@@ -69,7 +69,7 @@ export class AuthService {
     }
 
     public async logout(): Promise<Boolean> {
-        const envLogin = this.configService.adminLogin;
+        const envLogin = this.configService.panelAdminLogin;
         const result = await this.adminTokenRepository.delete({ login: envLogin });
         return result.affected === 1;
     }
