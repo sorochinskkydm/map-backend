@@ -86,4 +86,11 @@ export class AppConfigService {
     get mailPassword(): string {
         return this.configService.getOrThrow<string>('MAIL_PASSWORD');
     }
+
+    get mailSMTPHost(): string {
+        return this.configService.getOrThrow<string>('MAIL_SMTP_HOST');
+    }
+    get mailSMTPPort(): number {
+        return this.configService.getOrThrow<number>('MAIL_SMTP_PORT');
+    }
 }

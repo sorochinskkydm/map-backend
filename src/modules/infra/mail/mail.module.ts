@@ -11,8 +11,8 @@ import { MailService } from './mail.service';
             inject: [AppConfigService],
             useFactory: (configService: AppConfigService) => ({
                 transport: {
-                    host: 'smtp.mail.ru',
-                    port: 465,
+                    host: configService.mailSMTPHost,
+                    port: configService.mailSMTPPort,
                     secure: true,
                     auth: {
                         user: configService.mailUser,

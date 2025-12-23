@@ -2,12 +2,7 @@
 import { Mapper, createMap, forMember, mapFrom, mapWith } from '@automapper/core';
 import { AutomapperProfile, InjectMapper } from '@automapper/nestjs';
 import { Injectable } from '@nestjs/common';
-import {
-    ClusterEntity,
-    ClusterImageEntity,
-    FileEntity,
-    ObjectEntity,
-} from '@infra/postgres/entities';
+import { ClusterEntity, FileEntity, ObjectEntity } from '@infra/postgres/entities';
 import {
     ClusterDetailInfoOutputDto,
     ClusterOutputDto,
@@ -39,6 +34,10 @@ export class ClusterProfile extends AutomapperProfile {
                     }),
                 ),
                 forMember(
+                    (d) => d.options,
+                    mapFrom((source) => source.options),
+                ),
+                forMember(
                     (d) => d.countOfObjects,
                     mapFrom((source) => source.objects.length),
                 ),
@@ -56,6 +55,10 @@ export class ClusterProfile extends AutomapperProfile {
                     }),
                 ),
                 forMember(
+                    (d) => d.options,
+                    mapFrom((source) => source.options),
+                ),
+                forMember(
                     (d) => d.objects,
                     mapWith(ObjectShortInfoOutputDto, ObjectEntity, (source) => source.objects),
                 ),
@@ -71,6 +74,10 @@ export class ClusterProfile extends AutomapperProfile {
                 forMember(
                     (d) => d.countOfObjects,
                     mapFrom((source) => source.objects.length),
+                ),
+                forMember(
+                    (d) => d.options,
+                    mapFrom((source) => source.options),
                 ),
             );
         };

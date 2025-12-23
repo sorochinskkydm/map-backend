@@ -38,6 +38,10 @@ export class ClusterEntity {
     @Column({ type: 'int', default: 0 })
     sort: number;
 
+    @AutoMap()
+    @Column({ type: 'json', default: '{}' })
+    options: JSON;
+
     @OneToMany(() => ObjectEntity, (object) => object.cluster, {
         onDelete: 'CASCADE',
     })

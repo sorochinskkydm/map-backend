@@ -25,3 +25,5 @@
 | `ADMIN_PASSWORD`         | Пароль администратора                       |
 | `ADMIN_LOGIN`            | Логин администратора                        |
 | `WEBSOCKET_PATH`         | Путь документации websocket                 |
+| `THROTTLER_TTL`          | Время жизни throttler                       |
+| `THROTTLER_LIMIT`        | Лимит запросов throttler                    |

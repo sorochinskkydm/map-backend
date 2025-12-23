@@ -11,9 +11,10 @@ import { ApiTags, ApiBearerAuth, ApiConsumes, ApiOperation, ApiResponse } from '
 import { FileService } from './file.service';
 import { FileInterceptor } from '@nestjs/platform-express';
 import { FileOutputDto, UploadFileInputDto } from './dtos';
-import { JwtAuthGuard } from '@shared/guards';
+import { ThrottlerGuard } from '@nestjs/throttler';
 
 @ApiTags('Файлы')
+@UseGuards(ThrottlerGuard)
 @ApiBearerAuth('Authorization')
 @Controller({ path: 'files', version: '1' })
 export class FileController {
