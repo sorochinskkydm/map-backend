@@ -8,8 +8,9 @@ import { CategoryService } from '@api/categories/category.service';
 import { ClusterService } from '@api/clusters/cluster.service';
 import { EntityNotFoundException } from '@shared/exceptions';
 import { Transactional } from 'typeorm-transactional';
-import { UniversalPaginationDto } from '@shared/dtos';
+import { UniversalPaginationDto, UpdateSortInputDto } from '@shared/dtos';
 import { UpdateObjectInputDto } from './dtos/update-object.input.dto';
+import { ApiHelperService } from '@shared/classes/helper/api-helper.service';
 
 @Injectable()
 export class ObjectService {
@@ -22,6 +23,7 @@ export class ObjectService {
         private readonly fileService: FileService,
         private readonly categoryService: CategoryService,
         private readonly clusterService: ClusterService,
+        private readonly helperService: ApiHelperService,
     ) {}
 
     public async exists(options: FindOneOptions<ObjectEntity>): Promise<ObjectEntity> {
@@ -40,6 +42,7 @@ export class ObjectService {
         const cluster = clusterId
             ? await this.clusterService.exists({ where: { id: clusterId } })
             : undefined;
+        await this.objectRepository.increment({}, 'sort', 1);
         const object = this.objectRepository.create({
             ...objectDto,
             category,
@@ -79,6 +82,10 @@ export class ObjectService {
             await this.objectImageRepository.delete({ object: { id } });
         }
         return this.exists({ where: { id }, relations: { category: true, cluster: true } });
+    }
+
+    public async sort(id: string, dto: UpdateSortInputDto): Promise<boolean> {
+        return this.helperService.sort(id, this.objectRepository, dto, 'Object');
     }
 
     public async delete(id: string): Promise<Boolean> {

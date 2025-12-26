@@ -4,8 +4,9 @@ import { InjectRepository } from '@nestjs/typeorm';
 import { EntityNotFoundException } from '@shared/exceptions';
 import { DeepPartial, FindOneOptions, ILike, In, Not, Repository } from 'typeorm';
 import { GetListClasterInputDto, UpdateClusterInputDto } from './dtos';
-import { UniversalPaginationDto } from '@shared/dtos';
+import { UniversalPaginationDto, UpdateSortInputDto } from '@shared/dtos';
 import { FileService } from '@api/files/file.service';
+import { ApiHelperService } from '@shared/classes/helper/api-helper.service';
 
 @Injectable()
 export class ClusterService {
@@ -17,6 +18,7 @@ export class ClusterService {
         @InjectRepository(ClusterImageEntity)
         private readonly clusterImageRepository: Repository<ClusterImageEntity>,
         private readonly fileService: FileService,
+        private readonly helperService: ApiHelperService,
     ) {}
 
     public async exists(options: FindOneOptions<ClusterEntity>): Promise<ClusterEntity> {
@@ -32,6 +34,10 @@ export class ClusterService {
             where: { id },
             relations: { images: { file: true }, objects: { category: true } },
         });
+    }
+
+    public async sort(id: string, dto: UpdateSortInputDto): Promise<Boolean> {
+        return this.helperService.sort(id, this.clusterRepository, dto, 'Cluster');
     }
 
     public async getList(
