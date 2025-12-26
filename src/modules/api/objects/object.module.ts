@@ -1,4 +1,4 @@
-import { ObjectEntity, ObjectImageEntity } from '@infra/postgres/entities';
+import { CategoryObjectEntity, ObjectEntity, ObjectImageEntity } from '@infra/postgres/entities';
 import { Module } from '@nestjs/common';
 import { TypeOrmModule } from '@nestjs/typeorm';
 import { ObjectController } from './object.controller';
@@ -8,14 +8,16 @@ import { FileModule } from '@api/files/file.module';
 import { CategoryModule } from '@api/categories/category.module';
 import { ClusterModule } from '@api/clusters/cluster.module';
 import { ApiHelperModule } from '@shared/classes/helper/api-helper.module';
+import { CategoryObjectModule } from '@api/categories/category-objects/category-object.module';
 
 @Module({
     imports: [
-        TypeOrmModule.forFeature([ObjectEntity, ObjectImageEntity]),
+        TypeOrmModule.forFeature([ObjectEntity, ObjectImageEntity, CategoryObjectEntity]),
         FileModule,
         CategoryModule,
         ClusterModule,
         ApiHelperModule,
+        CategoryObjectModule,
     ],
     controllers: [ObjectController],
     providers: [ObjectService, ObjectProfile],

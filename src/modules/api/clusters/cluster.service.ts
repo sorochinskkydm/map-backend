@@ -33,8 +33,8 @@ export class ClusterService {
     public async getOne(id: string): Promise<ClusterEntity> {
         return this.exists({
             where: { id },
-            relations: { images: { file: true }, objects: { category: true } },
-            order: { objects: { sort: OrderOptionEnum.ASC } },
+            relations: { images: { file: true }, objects: { categoryObject: { category: true } } },
+            order: { objects: { categoryObject: { sort: OrderOptionEnum.ASC } } },
         });
     }
 

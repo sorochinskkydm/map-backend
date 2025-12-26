@@ -35,8 +35,12 @@ export class ObjectProfile extends AutomapperProfile {
                     mapWith(
                         CategoryShortInfoOutputDto,
                         CategoryEntity,
-                        (source) => source.category,
+                        (source) => source.categoryObject?.category,
                     ),
+                ),
+                forMember(
+                    (d) => d.sort,
+                    mapFrom((source) => source.categoryObject?.sort),
                 ),
             );
             createMap(
@@ -52,7 +56,7 @@ export class ObjectProfile extends AutomapperProfile {
                     mapWith(
                         CategoryShortInfoOutputDto,
                         CategoryEntity,
-                        (source) => source.category,
+                        (source) => source.categoryObject?.category,
                     ),
                 ),
             );
@@ -65,7 +69,7 @@ export class ObjectProfile extends AutomapperProfile {
                     mapWith(
                         CategoryShortInfoOutputDto,
                         CategoryEntity,
-                        (source) => source.category,
+                        (source) => source.categoryObject?.category,
                     ),
                 ),
                 forMember(
@@ -90,7 +94,7 @@ export class ObjectProfile extends AutomapperProfile {
                     mapWith(
                         CategoryShortInfoOutputDto,
                         CategoryEntity,
-                        (source) => source.category,
+                        (source) => source.categoryObject?.category,
                     ),
                 ),
                 forMember(

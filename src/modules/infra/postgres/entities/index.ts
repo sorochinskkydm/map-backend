@@ -7,3 +7,4 @@ export * from './request.entity';
 export * from './request-image.entity';
 export * from './cluster.entity';
 export * from './admin-token.entity';
+export * from './category-object.entity';

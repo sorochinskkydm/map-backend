@@ -7,6 +7,7 @@ import {
     ManyToMany,
     ManyToOne,
     OneToMany,
+    OneToOne,
     Point,
     PrimaryGeneratedColumn,
     UpdateDateColumn,
@@ -15,6 +16,7 @@ import { CategoryEntity } from './category.entity';
 import { ClusterEntity } from './cluster.entity';
 import { ObjectImageEntity } from './object-image.entity';
 import { ColumnNumericTransformer } from '../transformers';
+import { CategoryObjectEntity } from './category-object.entity';
 
 @Entity('objects')
 export class ObjectEntity {
@@ -39,10 +41,6 @@ export class ObjectEntity {
     description: string;
 
     @AutoMap()
-    @Column({ type: 'int', default: 0 })
-    sort: number;
-
-    @AutoMap()
     @Column({ type: 'boolean', default: true })
     isVisible: boolean;
 
@@ -54,16 +52,16 @@ export class ObjectEntity {
     @Column({ type: 'decimal', nullable: true, transformer: new ColumnNumericTransformer() })
     longitude: number;
 
-    @ManyToOne(() => CategoryEntity, (category) => category.objects, {
-        onDelete: 'CASCADE',
-    })
-    category: CategoryEntity;
-
     @ManyToOne(() => ClusterEntity, (cluster) => cluster.objects, {
         onDelete: 'CASCADE',
         nullable: true,
     })
     cluster: ClusterEntity;
+
+    @OneToOne(() => CategoryObjectEntity, (categoryObject) => categoryObject.object, {
+        onDelete: 'CASCADE',
+    })
+    categoryObject: CategoryObjectEntity;
 
     @OneToMany(() => ObjectImageEntity, (image) => image.object, {
         nullable: true,

@@ -1,5 +1,5 @@
 /* eslint-disable no-param-reassign */
-import { Mapper, afterMap, createMap, forMember, ignore, mapFrom, mapWith } from '@automapper/core';
+import { Mapper, createMap, forMember, ignore, mapFrom, mapWith } from '@automapper/core';
 import { AutomapperProfile, InjectMapper } from '@automapper/nestjs';
 import { Injectable } from '@nestjs/common';
 
@@ -33,7 +33,15 @@ export class CategoryProfile extends AutomapperProfile {
                 CategoryDetailInfoOutputDto,
                 forMember(
                     (d) => d.objects,
-                    mapWith(ObjectShortInfoOutputDto, ObjectEntity, (source) => source.objects),
+                    mapFrom((source) => {
+                        return source.objects.map((categoryObject) =>
+                            mapper.map(
+                                categoryObject.object,
+                                ObjectEntity,
+                                ObjectShortInfoOutputDto,
+                            ),
+                        );
+                    }),
                 ),
                 forMember(
                     (d) => d.file,
