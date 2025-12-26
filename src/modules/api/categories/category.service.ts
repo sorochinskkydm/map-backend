@@ -7,6 +7,7 @@ import { AlreadyExistsException, EntityNotFoundException } from '@shared/excepti
 import { FileService } from '@api/files/file.service';
 import { UniversalPaginationDto, UpdateSortInputDto } from '@shared/dtos';
 import { ApiHelperService } from '@shared/classes/helper/api-helper.service';
+import { OrderOptionEnum } from '@shared/enums';
 
 @Injectable()
 export class CategoryService {
@@ -31,6 +32,7 @@ export class CategoryService {
         return this.exists({
             where: { id },
             relations: { image: true, objects: { cluster: true } },
+            order: { objects: { sort: OrderOptionEnum.ASC } },
         });
     }
 

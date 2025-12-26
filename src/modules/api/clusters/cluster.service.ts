@@ -7,6 +7,7 @@ import { GetListClasterInputDto, UpdateClusterInputDto } from './dtos';
 import { UniversalPaginationDto, UpdateSortInputDto } from '@shared/dtos';
 import { FileService } from '@api/files/file.service';
 import { ApiHelperService } from '@shared/classes/helper/api-helper.service';
+import { OrderOptionEnum } from '@shared/enums';
 
 @Injectable()
 export class ClusterService {
@@ -33,6 +34,7 @@ export class ClusterService {
         return this.exists({
             where: { id },
             relations: { images: { file: true }, objects: { category: true } },
+            order: { objects: { sort: OrderOptionEnum.ASC } },
         });
     }
 
