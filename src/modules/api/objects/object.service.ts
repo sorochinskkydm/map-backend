@@ -1,4 +1,4 @@
-import { CategoryObjectEntity, ObjectEntity, ObjectImageEntity } from '@infra/postgres/entities';
+import { ObjectEntity, ObjectImageEntity } from '@infra/postgres/entities';
 import { Injectable, Logger } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import { DeepPartial, FindOneOptions, ILike, In, Not, Repository } from 'typeorm';
@@ -44,7 +44,12 @@ export class ObjectService {
         const cluster = clusterId
             ? await this.clusterService.exists({ where: { id: clusterId } })
             : undefined;
-        await this.categoryObjectService.categoryObjectRepository.increment({}, 'sort', 1);
+        await this.categoryObjectService.categoryObjectRepository.increment(
+            { category: { id: category.id } },
+            'sort',
+            1,
+        );
+
         const exists = await this.objectRepository.findOne({ where: { name: objectDto.name } });
         if (exists) {
             throw new AlreadyExistsException('Object', 'name', objectDto.name);
