@@ -16,11 +16,4 @@ export class CreateCategoryInputDto {
     })
     @IsUUID()
     fileId: string;
-
-    @ApiProperty({
-        title: 'Сортировка',
-        example: 1,
-    })
-    @IsNumber()
-    sort: number;
 }

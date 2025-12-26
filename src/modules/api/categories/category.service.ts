@@ -1,11 +1,12 @@
 import { CategoryEntity } from '@infra/postgres/entities';
 import { Injectable, Logger } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
-import { FindOneOptions, Repository, UpdateResult } from 'typeorm';
+import { FindOneOptions, Repository } from 'typeorm';
 import { CreateCategoryInputDto, UpdateCategoryInputDto } from './dtos';
 import { AlreadyExistsException, EntityNotFoundException } from '@shared/exceptions';
 import { FileService } from '@api/files/file.service';
-import { UniversalPaginationDto } from '@shared/dtos';
+import { UniversalPaginationDto, UpdateSortInputDto } from '@shared/dtos';
+import { ApiHelperService } from '@shared/classes/helper/api-helper.service';
 
 @Injectable()
 export class CategoryService {
@@ -14,6 +15,7 @@ export class CategoryService {
         @InjectRepository(CategoryEntity)
         private readonly categoryRepository: Repository<CategoryEntity>,
         private readonly fileService: FileService,
+        private readonly helperService: ApiHelperService,
     ) {}
 
     public async exists(options: FindOneOptions<CategoryEntity>): Promise<CategoryEntity> {
@@ -55,6 +57,7 @@ export class CategoryService {
         if (exists) {
             throw new AlreadyExistsException('Category', 'name', name);
         }
+        await this.categoryRepository.increment({}, 'sort', 1);
 
         const category = this.categoryRepository.create({ ...dto, image });
         return this.categoryRepository.save(category);
@@ -68,6 +71,10 @@ export class CategoryService {
             where: { id },
             relations: { image: true },
         });
+    }
+
+    public async sort(id: string, dto: UpdateSortInputDto) {
+        return this.helperService.sort(id, this.categoryRepository, dto, 'Category');
     }
 
     public async delete(id: string): Promise<Boolean> {

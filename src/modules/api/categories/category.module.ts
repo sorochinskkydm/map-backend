@@ -5,9 +5,10 @@ import { TypeOrmModule } from '@nestjs/typeorm';
 import { CategoryController } from './category.controller';
 import { CategoryService } from './category.service';
 import { CategoryProfile } from './profiles';
+import { ApiHelperModule } from '@shared/classes/helper/api-helper.module';
 
 @Module({
-    imports: [TypeOrmModule.forFeature([CategoryEntity]), FileModule],
+    imports: [TypeOrmModule.forFeature([CategoryEntity]), FileModule, ApiHelperModule],
     controllers: [CategoryController],
     providers: [CategoryService, CategoryProfile],
     exports: [CategoryService],

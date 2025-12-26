@@ -23,7 +23,7 @@ import {
 } from './dtos';
 import { CategoryService } from './category.service';
 import { ListCategoryOutputDto } from './dtos/list-category.output.dto';
-import { UniversalPaginationDto } from '@shared/dtos';
+import { UniversalPaginationDto, UpdateSortInputDto } from '@shared/dtos';
 import { JwtAuthGuard } from '@shared/guards';
 import { ThrottlerGuard } from '@nestjs/throttler';
 
@@ -69,6 +69,14 @@ export class CategoryController {
     async update(@Param('id', ParseUUIDPipe) id: string, @Body() dto: UpdateCategoryInputDto) {
         const result = await this.categoryService.update(id, dto);
         return this.mapper.mapAsync(result, CategoryEntity, CategoryOutputDto);
+    }
+
+    @UseGuards(JwtAuthGuard)
+    @ApiOperation({ summary: 'Сортировка категорий' })
+    @ApiResponse({ type: Boolean, status: HttpStatus.OK })
+    @Patch(':id/sort')
+    async sort(@Param('id', ParseUUIDPipe) id: string, @Body() dto: UpdateSortInputDto) {
+        return this.categoryService.sort(id, dto);
     }
 
     @UseGuards(JwtAuthGuard)

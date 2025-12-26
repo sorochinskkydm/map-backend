@@ -7,6 +7,7 @@ import { ObjectProfile } from './profiles';
 import { FileModule } from '@api/files/file.module';
 import { CategoryModule } from '@api/categories/category.module';
 import { ClusterModule } from '@api/clusters/cluster.module';
+import { ApiHelperModule } from '@shared/classes/helper/api-helper.module';
 
 @Module({
     imports: [
@@ -14,6 +15,7 @@ import { ClusterModule } from '@api/clusters/cluster.module';
         FileModule,
         CategoryModule,
         ClusterModule,
+        ApiHelperModule,
     ],
     controllers: [ObjectController],
     providers: [ObjectService, ObjectProfile],

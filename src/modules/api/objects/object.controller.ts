@@ -23,7 +23,7 @@ import {
 } from './dtos';
 import { ObjectEntity } from '@infra/postgres/entities';
 import { InjectMapper } from '@automapper/nestjs';
-import { UniversalPaginationDto } from '@shared/dtos';
+import { UniversalPaginationDto, UpdateSortInputDto } from '@shared/dtos';
 import { UpdateObjectInputDto } from './dtos/update-object.input.dto';
 import { JwtAuthGuard } from '@shared/guards';
 import { ThrottlerGuard } from '@nestjs/throttler';
@@ -69,6 +69,14 @@ export class ObjectController {
     async update(@Param('id', ParseUUIDPipe) id: string, @Body() dto: UpdateObjectInputDto) {
         const object = await this.objectService.update(id, dto);
         return this.mapper.mapAsync(object, ObjectEntity, ObjectOutputDto);
+    }
+
+    @UseGuards(JwtAuthGuard)
+    @ApiOperation({ summary: 'Сортировка объектов' })
+    @ApiResponse({ type: ObjectOutputDto, status: HttpStatus.OK })
+    @Patch(':id/sort')
+    async sort(@Param('id', ParseUUIDPipe) id: string, @Body() dto: UpdateSortInputDto) {
+        return this.objectService.sort(id, dto);
     }
 
     @UseGuards(JwtAuthGuard)
