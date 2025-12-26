@@ -11,6 +11,7 @@ import {
 import { ObjectEntity } from './object.entity';
 import { RequestEntity } from './request.entity';
 import { FileEntity } from './file.entity';
+import { CategoryObjectEntity } from './category-object.entity';
 
 @Entity('categories')
 export class CategoryEntity {
@@ -26,8 +27,8 @@ export class CategoryEntity {
     @Column({ type: 'int', default: 0 })
     sort: number;
 
-    @OneToMany(() => ObjectEntity, (object) => object.category)
-    objects: ObjectEntity[];
+    @OneToMany(() => CategoryObjectEntity, (categoryObject) => categoryObject.category)
+    objects: CategoryObjectEntity[];
 
     @OneToMany(() => RequestEntity, (request) => request.category)
     requests: RequestEntity[];

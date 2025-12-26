@@ -7,6 +7,7 @@ import { ObjectModule } from './objects/object.module';
 import { ClusterModule } from './clusters/cluster.module';
 import { RequestModule } from './requests/request.module';
 import { AuthModule } from './auth/auth.module';
+import { CategoryObjectModule } from './categories/category-objects/category-object.module';
 
 @Module({
     imports: [
@@ -19,6 +20,7 @@ import { AuthModule } from './auth/auth.module';
         ObjectModule,
         ClusterModule,
         RequestModule,
+        CategoryObjectModule,
     ],
 })
 export class ApiModule {}

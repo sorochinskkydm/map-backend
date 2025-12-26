@@ -31,7 +31,10 @@ export class CategoryService {
     public async getOne(id: string): Promise<CategoryEntity> {
         return this.exists({
             where: { id },
-            relations: { image: true, objects: { cluster: true } },
+            relations: {
+                image: true,
+                objects: { object: { cluster: true, categoryObject: { category: true } } },
+            },
             order: { objects: { sort: OrderOptionEnum.ASC } },
         });
     }
