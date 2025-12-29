@@ -22,8 +22,8 @@
 | `JWT_REFRESH_SECRET_KEY` | Секретный ключ JWT Refresh                  |
 | `JWT_ACCESS_SECRET_KEY`  | Секретный ключ JWT Access                   |
 | `ADMIN_MAIL`             | Почта администратора                        |
-| `ADMIN_PASSWORD`         | Пароль администратора                       |
-| `ADMIN_LOGIN`            | Логин администратора                        |
+| `PANEL_ADMIN_PASSWORD`   | Пароль администратора                       |
+| `PANEL_ADMIN_LOGIN`      | Логин администратора                        |
 | `WEBSOCKET_PATH`         | Путь документации websocket                 |
 | `THROTTLER_TTL`          | Время жизни throttler                       |
 | `THROTTLER_LIMIT`        | Лимит запросов throttler                    |
