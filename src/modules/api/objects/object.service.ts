@@ -109,9 +109,10 @@ export class ObjectService {
     public async sort(id: string, dto: UpdateSortInputDto): Promise<boolean> {
         return this.helperService.sort(
             id,
+            { object: { id } },
             this.categoryObjectService.categoryObjectRepository,
             dto,
-            'Object',
+            'CategoryObject',
         );
     }
 

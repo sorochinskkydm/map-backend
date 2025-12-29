@@ -2,7 +2,7 @@ import { Injectable } from '@nestjs/common';
 import { UpdateSortInputDto } from '@shared/dtos';
 import { EntityNotFoundException } from '@shared/exceptions';
 import { SortableEntity } from '@shared/interfaces';
-import { Between, Repository } from 'typeorm';
+import { Between, FindOneOptions, FindOptionsWhere, Repository } from 'typeorm';
 import { Transactional } from 'typeorm-transactional';
 
 @Injectable()
@@ -12,12 +12,13 @@ export class ApiHelperService {
     @Transactional()
     public async sort<T extends SortableEntity>(
         id: string,
+        where: FindOptionsWhere<T>,
         repository: Repository<T>,
         dto: UpdateSortInputDto,
         sortableEntity: string,
     ): Promise<boolean> {
         const { sort } = dto;
-        const entity = await repository.findOne({ where: { id } as any });
+        const entity = await repository.findOne({ where });
         if (!entity) {
             throw new EntityNotFoundException(sortableEntity);
         }

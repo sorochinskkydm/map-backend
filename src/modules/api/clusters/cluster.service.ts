@@ -39,7 +39,7 @@ export class ClusterService {
     }
 
     public async sort(id: string, dto: UpdateSortInputDto): Promise<Boolean> {
-        return this.helperService.sort(id, this.clusterRepository, dto, 'Cluster');
+        return this.helperService.sort(id, { id }, this.clusterRepository, dto, 'Cluster');
     }
 
     public async getList(
