@@ -79,7 +79,7 @@ export class CategoryService {
     }
 
     public async sort(id: string, dto: UpdateSortInputDto) {
-        return this.helperService.sort(id, this.categoryRepository, dto, 'Category');
+        return this.helperService.sort(id, { id }, this.categoryRepository, dto, 'Category');
     }
 
     public async delete(id: string): Promise<Boolean> {
