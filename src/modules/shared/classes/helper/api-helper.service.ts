@@ -2,7 +2,7 @@ import { Injectable } from '@nestjs/common';
 import { UpdateSortInputDto } from '@shared/dtos';
 import { EntityNotFoundException } from '@shared/exceptions';
 import { SortableEntity } from '@shared/interfaces';
-import { Between, FindOneOptions, FindOptionsWhere, Repository } from 'typeorm';
+import { Between, FindOptionsWhere, Repository } from 'typeorm';
 import { Transactional } from 'typeorm-transactional';
 
 @Injectable()
@@ -36,7 +36,7 @@ export class ApiHelperService {
             await repository.decrement(option as any, 'sort', 1);
         }
 
-        const result = await repository.update(id, dto as any);
+        const result = await repository.update(where, dto as any);
         if (result.affected === 0) {
             throw new EntityNotFoundException(sortableEntity, id);
         }
