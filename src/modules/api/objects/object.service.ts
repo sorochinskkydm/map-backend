@@ -78,10 +78,6 @@ export class ObjectService {
     @Transactional()
     public async update(id: string, dto: UpdateObjectInputDto): Promise<ObjectEntity> {
         const { fileIds, categoryId, clusterId, name, ...objectDto } = dto;
-        const exists = await this.objectRepository.findOne({ where: { name } });
-        if (exists) {
-            throw new AlreadyExistsException('Object', 'name', name);
-        }
         const object = await this.exists({ where: { id }, relations: { categoryObject: true } });
         const category = await this.categoryService.exists({ where: { id: categoryId } });
         const cluster = clusterId
