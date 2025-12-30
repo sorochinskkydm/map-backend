@@ -62,6 +62,7 @@ export class AppWebSocketGateway implements OnGatewayConnection, OnGatewayDiscon
 
     protected sendToUser(login: string, event: string, data: any) {
         const client = this.clients.get(login);
+        console.log(client, '<=============client');
         if (client) {
             client.emit(event, data);
         }

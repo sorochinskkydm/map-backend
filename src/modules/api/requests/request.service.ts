@@ -82,7 +82,7 @@ export class RequestService {
             html: buildRequestHtml(result),
         };
 
-        this.requestGateway.sendOrder(request);
+        await this.requestGateway.sendRequest(request);
         await this.mailService.send(mailDto);
 
         return result;
