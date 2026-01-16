@@ -1,5 +1,4 @@
-ARG IMAGE=node:25-slim
-
+ARG IMAGE=node:24.11.1-slim
 
 FROM ${IMAGE} AS build
 
