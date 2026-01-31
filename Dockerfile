@@ -9,7 +9,7 @@ WORKDIR /usr/src/app
 COPY package.json yarn.lock .yarnrc.yml .yarn/ ./
 
 # устанавливаем зависимости проекта
-RUN yarn install --immutable
+RUN corepack enable && yarn install --immutable
 
 # копируем исходники
 COPY . .
@@ -36,7 +36,7 @@ WORKDIR /usr/src/app
 
 COPY package.json yarn.lock .yarnrc.yml .yarn/ ./
 
-RUN yarn install --production=true --immutable
+RUN corepack enable && yarn install --production=true --immutable
 
 COPY --from=build /usr/src/app/dist ./dist
 COPY --chown=appuser:appuser ecosystem.config.js ./
