@@ -148,7 +148,7 @@ export class ObjectService {
 
     public async toggle(id: string): Promise<{ isVisible: boolean }> {
         const object = await this.exists({ where: { id } });
-        const result = await this.objectRepository.update(id, { isVisible: !object.isVisible });
+        await this.objectRepository.update(id, { isVisible: !object.isVisible });
         return { isVisible: !object.isVisible };
     }
 }

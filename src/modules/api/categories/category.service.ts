@@ -40,7 +40,6 @@ export class CategoryService {
     }
 
     public async getList({
-        page,
         limit,
         skip,
         orderOptions,
