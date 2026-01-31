@@ -6,10 +6,10 @@ FROM ${IMAGE} AS build
 WORKDIR /usr/src/app
 
 # Копируем только package.json и yarn.lock для более эффективного кэширования
-COPY package.json ./ yarn.lock ./
+COPY package.json yarn.lock .yarnrc.yml .yarn/ ./
 
 # устанавливаем зависимости проекта
-RUN yarn install --frozen-lockfile
+RUN yarn install --immutable
 
 # копируем исходники
 COPY . .
@@ -34,9 +34,9 @@ RUN apt-get update \
 # Устанавливаем рабочую директорию
 WORKDIR /usr/src/app
 
-COPY package.json ./ yarn.lock ./
+COPY package.json yarn.lock .yarnrc.yml .yarn/ ./
 
-RUN yarn install --production=true --frozen-lockfile
+RUN yarn install --production=true --immutable
 
 COPY --from=build /usr/src/app/dist ./dist
 COPY --chown=appuser:appuser ecosystem.config.js ./
