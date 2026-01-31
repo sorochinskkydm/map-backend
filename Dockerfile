@@ -36,7 +36,7 @@ WORKDIR /usr/src/app
 
 COPY package.json yarn.lock .yarnrc.yml .yarn/ ./
 
-RUN corepack enable && yarn install --production=true --immutable
+RUN corepack enable && yarn install --immutable
 
 COPY --from=build /usr/src/app/dist ./dist
 COPY --chown=appuser:appuser ecosystem.config.js ./
