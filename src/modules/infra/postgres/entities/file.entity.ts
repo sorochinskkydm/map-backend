@@ -39,23 +39,15 @@ export class FileEntity {
     @UpdateDateColumn()
     updatedAt: Date;
 
-    @OneToMany(() => CategoryEntity, (category) => category.image, {
-        onDelete: 'SET NULL',
-    })
+    @OneToMany(() => CategoryEntity, (category) => category.image)
     categoryIcon: CategoryEntity[];
 
-    @OneToMany(() => RequestImageEntity, (requestImage) => requestImage.file, {
-        onDelete: 'CASCADE',
-    })
+    @OneToMany(() => RequestImageEntity, (requestImage) => requestImage.file)
     requestImages: RequestImageEntity[];
 
-    @OneToMany(() => ObjectImageEntity, (objectImage) => objectImage.file, {
-        onDelete: 'CASCADE',
-    })
+    @OneToMany(() => ObjectImageEntity, (objectImage) => objectImage.file)
     objectImages: ObjectImageEntity[];
 
-    @OneToMany(() => ClusterImageEntity, (clusterImage) => clusterImage.file, {
-        onDelete: 'CASCADE',
-    })
+    @OneToMany(() => ClusterImageEntity, (clusterImage) => clusterImage.file)
     clusterImages: ClusterImageEntity[];
 }

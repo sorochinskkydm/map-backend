@@ -33,7 +33,9 @@ export class CategoryEntity {
     @OneToMany(() => RequestEntity, (request) => request.category)
     requests: RequestEntity[];
 
-    @ManyToOne(() => FileEntity, (file) => file.categoryIcon)
+    @ManyToOne(() => FileEntity, (file) => file.categoryIcon, {
+        onDelete: 'SET NULL',
+    })
     image: FileEntity;
 
     @AutoMap()
