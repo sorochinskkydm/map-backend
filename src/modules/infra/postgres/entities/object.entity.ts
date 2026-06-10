@@ -58,14 +58,10 @@ export class ObjectEntity {
     })
     cluster: ClusterEntity;
 
-    @OneToOne(() => CategoryObjectEntity, (categoryObject) => categoryObject.object, {
-        onDelete: 'CASCADE',
-    })
+    @OneToOne(() => CategoryObjectEntity, (categoryObject) => categoryObject.object)
     categoryObject: CategoryObjectEntity;
 
-    @OneToMany(() => ObjectImageEntity, (image) => image.object, {
-        nullable: true,
-    })
+    @OneToMany(() => ObjectImageEntity, (image) => image.object)
     images: ObjectImageEntity[];
 
     @AutoMap()

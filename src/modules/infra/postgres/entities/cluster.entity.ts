@@ -42,19 +42,13 @@ export class ClusterEntity {
     @Column({ type: 'json', default: '{}' })
     options: JSON;
 
-    @OneToMany(() => ObjectEntity, (object) => object.cluster, {
-        onDelete: 'CASCADE',
-    })
+    @OneToMany(() => ObjectEntity, (object) => object.cluster)
     objects: ObjectEntity[];
 
-    @OneToMany(() => RequestEntity, (request) => request.cluster, {
-        onDelete: 'CASCADE',
-    })
+    @OneToMany(() => RequestEntity, (request) => request.cluster)
     requests: RequestEntity[];
 
-    @OneToMany(() => ClusterImageEntity, (image) => image.cluster, {
-        onDelete: 'CASCADE',
-    })
+    @OneToMany(() => ClusterImageEntity, (image) => image.cluster)
     images: ClusterImageEntity[];
 
     @AutoMap()
