@@ -35,15 +35,13 @@ export class FileOutputDto {
     @ApiProperty({
         title: 'Ширина (px)',
         example: 1920,
-        nullable: true,
     })
-    width: number | null;
+    width: number;
 
     @AutoMap()
     @ApiProperty({
         title: 'Высота (px)',
         example: 1080,
-        nullable: true,
     })
-    height: number | null;
+    height: number;
 }

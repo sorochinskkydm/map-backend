@@ -1,12 +1,11 @@
 /* eslint-disable no-param-reassign */
-import { Mapper, afterMap, createMap, forMember, ignore, mapFrom } from '@automapper/core';
+import { Mapper, createMap, forMember, mapFrom } from '@automapper/core';
 import { AutomapperProfile, InjectMapper } from '@automapper/nestjs';
 import { Injectable } from '@nestjs/common';
 
 import { ClusterImageEntity, FileEntity } from '@infra/postgres/entities';
 
 import { FileOutputDto } from '../dtos';
-import { FileWithSortOutputDto } from '../dtos/file-with-sort.output.dto';
 
 @Injectable()
 export class FileProfile extends AutomapperProfile {
@@ -23,6 +22,14 @@ export class FileProfile extends AutomapperProfile {
                 forMember(
                     (d) => d.url,
                     mapFrom((source) => source.url),
+                ),
+                forMember(
+                    (d) => d.width,
+                    mapFrom((source) => source?.width),
+                ),
+                forMember(
+                    (d) => d.height,
+                    mapFrom((source) => source?.height),
                 ),
             );
             createMap(
@@ -47,7 +54,7 @@ export class FileProfile extends AutomapperProfile {
                 ),
                 forMember(
                     (d) => d.width,
-                    mapFrom((source) => source?.file?.width),
+                    mapFrom((source) => console.log(source)),
                 ),
                 forMember(
                     (d) => d.height,
