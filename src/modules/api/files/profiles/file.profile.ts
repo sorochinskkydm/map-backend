@@ -45,6 +45,14 @@ export class FileProfile extends AutomapperProfile {
                     (d) => d.url,
                     mapFrom((source) => source?.file?.url),
                 ),
+                forMember(
+                    (d) => d.width,
+                    mapFrom((source) => source?.file?.width),
+                ),
+                forMember(
+                    (d) => d.height,
+                    mapFrom((source) => source?.file?.height),
+                ),
             );
         };
     }

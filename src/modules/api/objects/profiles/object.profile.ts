@@ -76,6 +76,14 @@ export class ObjectProfile extends AutomapperProfile {
                     (d) => d.cluster,
                     mapWith(ClusterShortInfoOutputDto, ClusterEntity, (source) => source.cluster),
                 ),
+                forMember(
+                    (d) => d.files,
+                    mapFrom((source) => {
+                        return source.images?.map((image) =>
+                            mapper.map(image.file, FileEntity, FileOutputDto),
+                        );
+                    }),
+                ),
             );
             createMap(
                 mapper,

@@ -39,7 +39,6 @@ COPY package.json yarn.lock .yarnrc.yml .yarn/ ./
 RUN corepack enable && yarn install --immutable
 RUN yarn workspaces focus --production --all
 
-
 COPY --from=build /usr/src/app/dist ./dist
 COPY --chown=appuser:appuser ecosystem.config.js ./
 

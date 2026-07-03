@@ -32,6 +32,14 @@ export class FileEntity {
     size: number;
 
     @AutoMap()
+    @Column({ type: 'int', nullable: true })
+    width: number | null;
+
+    @AutoMap()
+    @Column({ type: 'int', nullable: true })
+    height: number | null;
+
+    @AutoMap()
     @CreateDateColumn()
     createdAt: Date;
 

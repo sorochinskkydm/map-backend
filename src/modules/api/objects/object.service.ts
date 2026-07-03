@@ -127,7 +127,11 @@ export class ObjectService {
     ): Promise<[ObjectEntity[], number]> {
         const { categoryId, clusterId, search } = dto;
         return this.objectRepository.findAndCount({
-            relations: { categoryObject: { category: { image: true } }, cluster: true },
+            relations: {
+                categoryObject: { category: { image: true } },
+                images: { file: true },
+                cluster: true,
+            },
             where: {
                 categoryObject: { category: { id: categoryId } },
                 cluster: { id: clusterId },

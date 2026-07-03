@@ -8,6 +8,7 @@ import { FileEntity } from '@infra/postgres/entities';
 import { UploadFileInputDto } from './dtos';
 import * as path from 'path';
 import * as fs from 'fs';
+import { imageSize } from 'image-size';
 import { AppConfigService } from '@infra/config/config.service';
 
 @Injectable()
@@ -47,10 +48,28 @@ export class FileService {
 
         const url = `${this.configService.baseUrl}/api/uploads/${folderPath}/${filename}`;
 
+        let width: number | null = null;
+        let height: number | null = null;
+        if (mimetype.startsWith('image/')) {
+            try {
+                const dims = imageSize(file.buffer);
+                const orientation = (dims as { orientation?: number }).orientation;
+                const rotated = typeof orientation === 'number' && orientation >= 5;
+                width = (rotated ? dims.height : dims.width) ?? null;
+                height = (rotated ? dims.width : dims.height) ?? null;
+            } catch (err) {
+                this.logger.warn(
+                    `Не удалось определить разрешение картинки: ${(err as Error).message}`,
+                );
+            }
+        }
+
         const result = this.fileRepository.create({
             url,
             size,
             type: mimetype,
+            width,
+            height,
         });
 
         return this.fileRepository.save(result);

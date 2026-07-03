@@ -30,4 +30,20 @@ export class FileOutputDto {
         example: ExampleValueEnum.FILE_SIZE,
     })
     size: number;
+
+    @AutoMap()
+    @ApiProperty({
+        title: 'Ширина (px)',
+        example: 1920,
+        nullable: true,
+    })
+    width: number | null;
+
+    @AutoMap()
+    @ApiProperty({
+        title: 'Высота (px)',
+        example: 1080,
+        nullable: true,
+    })
+    height: number | null;
 }
