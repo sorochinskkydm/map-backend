@@ -54,7 +54,7 @@ export class FileProfile extends AutomapperProfile {
                 ),
                 forMember(
                     (d) => d.width,
-                    mapFrom((source) => console.log(source)),
+                    mapFrom((source) => source?.file?.width),
                 ),
                 forMember(
                     (d) => d.height,
