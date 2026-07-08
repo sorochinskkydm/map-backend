@@ -86,7 +86,6 @@ export class FileService {
             withoutEnlargement: true,
         });
 
-        console.log(extension, '<=============== extension');
         switch (extension) {
             case '.jpeg':
                 pipeline = pipeline.jpeg({ quality, mozjpeg: true });
@@ -100,8 +99,6 @@ export class FileService {
             default:
                 pipeline = pipeline.jpeg({ quality });
         }
-
-        console.log(pipeline, '<==============pipeline');
 
         return await pipeline.toBuffer();
     }
