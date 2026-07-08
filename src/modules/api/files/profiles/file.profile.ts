@@ -24,6 +24,10 @@ export class FileProfile extends AutomapperProfile {
                     mapFrom((source) => source.url),
                 ),
                 forMember(
+                    (d) => d.previewUrl,
+                    mapFrom((source) => source.previewUrl),
+                ),
+                forMember(
                     (d) => d.width,
                     mapFrom((source) => source?.width),
                 ),
@@ -51,6 +55,10 @@ export class FileProfile extends AutomapperProfile {
                 forMember(
                     (d) => d.url,
                     mapFrom((source) => source?.file?.url),
+                ),
+                forMember(
+                    (d) => d.previewUrl,
+                    mapFrom((source) => source?.file?.previewUrl),
                 ),
                 forMember(
                     (d) => d.width,

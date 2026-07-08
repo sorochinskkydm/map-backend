@@ -19,6 +19,13 @@ export class FileOutputDto {
 
     @AutoMap()
     @ApiProperty({
+        title: 'Предпросмотр',
+        example: ExampleValueEnum.FILE_URL,
+    })
+    previewUrl: string;
+
+    @AutoMap()
+    @ApiProperty({
         title: 'Тип',
         example: ExampleValueEnum.FILE_TYPE,
     })

@@ -3,7 +3,6 @@ import {
     Column,
     CreateDateColumn,
     Entity,
-    ManyToOne,
     OneToMany,
     PrimaryGeneratedColumn,
     UpdateDateColumn,
@@ -22,6 +21,10 @@ export class FileEntity {
     @AutoMap()
     @Column()
     url: string;
+
+    @AutoMap()
+    @Column({ nullable: true })
+    previewUrl: string;
 
     @AutoMap()
     @Column()
